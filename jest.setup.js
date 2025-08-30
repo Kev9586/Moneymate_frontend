@@ -1,17 +1,17 @@
 /* global jest */
 jest.mock('react-native-reanimated', () => ({
   default: {
-    createAnimatedComponent: (component: any) => component,
+    createAnimatedComponent: (component) => component,
     useSharedValue: () => ({value: 0}),
     useAnimatedStyle: () => ({}),
-    withSpring: (value: any) => value,
-    withTiming: (value: any) => value,
+    withSpring: (value) => value,
+    withTiming: (value) => value,
     call: () => {},
   },
   useSharedValue: () => ({value: 0}),
   useAnimatedStyle: () => ({}),
-  withSpring: (value: any) => value,
-  withTiming: (value: any) => value,
+  withSpring: (value) => value,
+  withTiming: (value) => value,
 }));
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
@@ -26,7 +26,7 @@ jest.mock('react-native-encrypted-storage', () => ({
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon');
 
 jest.mock('@react-navigation/native', () => ({
-  NavigationContainer: ({children}: any) => children,
+  NavigationContainer: ({children}) => children,
   useNavigation: () => ({
     navigate: jest.fn(),
     replace: jest.fn(),
@@ -40,15 +40,15 @@ jest.mock('@react-navigation/native', () => ({
 
 jest.mock('@react-navigation/stack', () => ({
   createStackNavigator: () => ({
-    Navigator: ({children}: any) => children,
-    Screen: ({children}: any) => children,
+    Navigator: ({children}) => children,
+    Screen: ({children}) => children,
   }),
 }));
 
 jest.mock('@react-navigation/bottom-tabs', () => ({
   createBottomTabNavigator: () => ({
-    Navigator: ({children}: any) => children,
-    Screen: ({children}: any) => children,
+    Navigator: ({children}) => children,
+    Screen: ({children}) => children,
   }),
 }));
 
