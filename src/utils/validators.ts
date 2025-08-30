@@ -46,7 +46,7 @@ export const validatePassword = (
 /**
  * Validate required field
  */
-export const validateRequired = (value: any): boolean => {
+export const validateRequired = (value: unknown): boolean => {
   if (typeof value === 'string') {
     return value.trim().length > 0;
   }
