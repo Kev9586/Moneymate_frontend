@@ -41,8 +41,9 @@ export const fetchTransactions = createAsyncThunk(
 export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
   async (transactionData: Omit<Transaction, 'id'>) => {
-    const response =
-      await TransactionService.createTransaction(transactionData);
+    const response = await TransactionService.createTransaction(
+      transactionData,
+    );
     return response;
   },
 );
@@ -50,8 +51,9 @@ export const createTransaction = createAsyncThunk(
 export const updateTransaction = createAsyncThunk(
   'transactions/updateTransaction',
   async (transactionData: Transaction) => {
-    const response =
-      await TransactionService.updateTransaction(transactionData);
+    const response = await TransactionService.updateTransaction(
+      transactionData,
+    );
     return response;
   },
 );
