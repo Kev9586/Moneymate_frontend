@@ -662,7 +662,6 @@ const ExpensiveComponent = React.memo(({data}) => {
    ```
 
 4. **Navigation issues**
-
    - Check navigation structure
    - Verify screen names match navigation config
    - Ensure proper type definitions
