@@ -12,7 +12,7 @@ import {it, describe} from '@jest/globals';
 
 describe('App', () => {
   it('renders correctly', () => {
-    const {getByTestId} = render(<App />);
+    render(<App />);
     // Just test that the app renders without crashing
     expect(true).toBe(true);
   });

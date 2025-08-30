@@ -1,13 +1,14 @@
+/* global jest */
 jest.mock('react-native-reanimated', () => ({
   default: {
     createAnimatedComponent: (component: any) => component,
-    useSharedValue: () => ({ value: 0 }),
+    useSharedValue: () => ({value: 0}),
     useAnimatedStyle: () => ({}),
     withSpring: (value: any) => value,
     withTiming: (value: any) => value,
     call: () => {},
   },
-  useSharedValue: () => ({ value: 0 }),
+  useSharedValue: () => ({value: 0}),
   useAnimatedStyle: () => ({}),
   withSpring: (value: any) => value,
   withTiming: (value: any) => value,

@@ -5,10 +5,12 @@ Based on the frontend implementation and the comprehensive feature set outlined 
 ## Authentication Endpoints
 
 ### ✅ Existing (Assumed)
+
 - `POST /auth/login` - User login
 - `POST /auth/register` - User registration
 
 ### 🚨 Missing
+
 - `POST /auth/logout` - Logout user and invalidate token
 - `POST /auth/forgot-password` - Send password reset email
 - `POST /auth/reset-password` - Reset password with token
@@ -58,6 +60,7 @@ interface RefreshTokenResponse {
 ## Account Management Endpoints
 
 ### ✅ Existing (Assumed)
+
 - `GET /accounts` - Get user accounts
 - `POST /accounts` - Create new account
 - `GET /accounts/:id` - Get specific account
@@ -65,6 +68,7 @@ interface RefreshTokenResponse {
 - `DELETE /accounts/:id` - Delete account
 
 ### 🚨 Missing
+
 - `POST /accounts/:id/sync` - Sync account with bank
 - `GET /accounts/:id/balance-history` - Get balance history
 - `PUT /accounts/:id/status` - Enable/disable account
@@ -97,6 +101,7 @@ interface BalanceHistoryResponse {
 ## Transaction Endpoints
 
 ### ✅ Existing (Assumed)
+
 - `GET /transactions` - Get transactions with filters
 - `POST /transactions` - Create transaction
 - `GET /transactions/:id` - Get specific transaction
@@ -104,6 +109,7 @@ interface BalanceHistoryResponse {
 - `DELETE /transactions/:id` - Delete transaction
 
 ### 🚨 Missing
+
 - `GET /transactions/summary` - Get transaction summary/analytics
 - `GET /transactions/categories` - Get transaction categories
 - `POST /transactions/categories` - Create custom category
@@ -176,12 +182,14 @@ interface BulkImportResponse {
 ## Budget Management Endpoints
 
 ### ✅ Existing (Assumed)
+
 - `GET /budgets` - Get user budgets
 - `POST /budgets` - Create budget
 - `PUT /budgets/:id` - Update budget
 - `DELETE /budgets/:id` - Delete budget
 
 ### 🚨 Missing
+
 - `GET /budgets/:id/progress` - Get budget progress details
 - `GET /budgets/alerts` - Get budget alerts/notifications
 - `POST /budgets/:id/reset` - Reset budget period
@@ -218,12 +226,14 @@ interface BudgetAlertsResponse {
 ## Goals Management Endpoints
 
 ### ✅ Existing (Assumed)
+
 - `GET /goals` - Get user goals
 - `POST /goals` - Create goal
 - `PUT /goals/:id` - Update goal
 - `DELETE /goals/:id` - Delete goal
 
 ### 🚨 Missing
+
 - `POST /goals/:id/progress` - Update goal progress
 - `GET /goals/:id/progress-history` - Get progress history
 - `POST /goals/:id/auto-save` - Set up automatic savings
@@ -262,6 +272,7 @@ interface ProgressHistoryResponse {
 ## Reports and Analytics Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `GET /reports/overview` - Dashboard overview data
 - `GET /reports/spending-trends` - Spending trend analysis
 - `GET /reports/income-analysis` - Income analysis
@@ -318,6 +329,7 @@ interface SpendingTrendsResponse {
 ## Notification Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `GET /notifications` - Get user notifications
 - `POST /notifications/mark-read` - Mark notifications as read
 - `PUT /notifications/preferences` - Update notification preferences
@@ -356,6 +368,7 @@ interface NotificationPreferencesRequest {
 ## Settings and Preferences Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `GET /settings/preferences` - Get user preferences
 - `PUT /settings/preferences` - Update user preferences
 - `GET /settings/security` - Get security settings
@@ -392,6 +405,7 @@ interface BackupResponse {
 ## File and Media Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `POST /uploads/receipt` - Upload receipt image
 - `GET /uploads/:id` - Get uploaded file
 - `DELETE /uploads/:id` - Delete uploaded file
@@ -420,6 +434,7 @@ interface ReceiptUploadResponse {
 ## Search and Filter Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `GET /search/transactions` - Advanced transaction search
 - `GET /search/global` - Global search across all entities
 - `GET /filters/saved` - Get saved search filters
@@ -455,9 +470,9 @@ interface TransactionSearchResponse {
   page: number;
   totalPages: number;
   facets: {
-    categories: Array<{ name: string; count: number }>;
-    accounts: Array<{ name: string; count: number }>;
-    dateRanges: Array<{ range: string; count: number }>;
+    categories: Array<{name: string; count: number}>;
+    accounts: Array<{name: string; count: number}>;
+    dateRanges: Array<{range: string; count: number}>;
   };
 }
 ```
@@ -465,6 +480,7 @@ interface TransactionSearchResponse {
 ## Integration Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `GET /integrations/banks` - Get available bank integrations
 - `POST /integrations/banks/connect` - Connect bank account
 - `GET /integrations/banks/status` - Get integration status
@@ -501,6 +517,7 @@ interface BankConnectionResponse {
 ## Admin/System Endpoints
 
 ### 🚨 Missing (Completely New)
+
 - `GET /system/health` - System health check
 - `GET /system/version` - Get API version info
 - `GET /system/features` - Get enabled features
@@ -514,6 +531,7 @@ interface BankConnectionResponse {
 ### Priority Levels:
 
 **High Priority (Core Functionality):**
+
 1. Authentication (logout, password reset)
 2. Transaction summary and analytics
 3. Budget progress and alerts
@@ -521,6 +539,7 @@ interface BankConnectionResponse {
 5. Notification system
 
 **Medium Priority (Enhanced Features):**
+
 1. Advanced search and filtering
 2. File uploads and receipt management
 3. Bank integrations
@@ -528,6 +547,7 @@ interface BankConnectionResponse {
 5. User preferences and settings
 
 **Low Priority (Nice to Have):**
+
 1. Custom report generation
 2. Advanced analytics
 3. Data backup and restore

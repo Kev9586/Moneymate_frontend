@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -83,10 +77,7 @@ const OnboardingScreen: React.FC = () => {
           key={index}
           style={[
             styles.dot,
-            {
-              backgroundColor:
-                currentSlide === index ? 'white' : 'rgba(255,255,255,0.3)',
-            },
+            currentSlide === index ? styles.activeDot : styles.inactiveDot,
           ]}
         />
       ))}
@@ -165,6 +156,12 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     marginHorizontal: 5,
+  },
+  activeDot: {
+    backgroundColor: 'white',
+  },
+  inactiveDot: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
   buttonContainer: {
     position: 'absolute',

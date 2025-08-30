@@ -6,7 +6,7 @@ MoneyMate is a comprehensive React Native application designed to help users man
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - React Native CLI
 - Android Studio (for Android development)
 - Xcode (for iOS development)
@@ -15,31 +15,36 @@ MoneyMate is a comprehensive React Native application designed to help users man
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/Kev9586/Moneymate_frontend.git
    cd Moneymate_frontend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **iOS Setup** (macOS only)
+
    ```bash
    cd ios && pod install && cd ..
    ```
 
 4. **Start Metro Bundler**
+
    ```bash
    npm start
    ```
 
 5. **Run the app**
+
    ```bash
    # For iOS
    npm run ios
-   
+
    # For Android
    npm run android
    ```
@@ -47,6 +52,7 @@ MoneyMate is a comprehensive React Native application designed to help users man
 ## 📱 Features
 
 ### Core Features
+
 - **Account Management**: Link and manage multiple bank accounts
 - **Transaction Tracking**: Categorize and monitor income/expenses
 - **Budget Planning**: Set and track budgets with alerts
@@ -55,6 +61,7 @@ MoneyMate is a comprehensive React Native application designed to help users man
 - **Secure Authentication**: Email/password with biometric options
 
 ### Advanced Features
+
 - **Offline Sync**: Work offline with automatic sync when online
 - **Real-time Notifications**: Budget alerts and transaction notifications
 - **Data Export**: Export reports as CSV/PDF
@@ -64,6 +71,7 @@ MoneyMate is a comprehensive React Native application designed to help users man
 ## 🏗 Architecture
 
 ### Technology Stack
+
 - **Framework**: React Native 0.74.x
 - **State Management**: Redux Toolkit
 - **Navigation**: React Navigation v6
@@ -75,6 +83,7 @@ MoneyMate is a comprehensive React Native application designed to help users man
 - **Testing**: Jest + React Native Testing Library + Detox
 
 ### Project Structure
+
 ```
 src/
 ├── components/          # Reusable UI components
@@ -112,6 +121,7 @@ npm run build:ios     # Build iOS app
 ### Code Quality
 
 This project uses:
+
 - **ESLint** for code linting
 - **Prettier** for code formatting
 - **TypeScript** for type safety
@@ -131,11 +141,13 @@ ENABLE_FLIPPER=false
 ## 🧪 Testing
 
 ### Unit Tests
+
 ```bash
 npm test
 ```
 
 ### E2E Tests
+
 ```bash
 # iOS
 npm run test:e2e:ios
@@ -145,6 +157,7 @@ npm run test:e2e:android
 ```
 
 ### Test Coverage
+
 ```bash
 npm run test:coverage
 ```
@@ -152,12 +165,14 @@ npm run test:coverage
 ## 📚 API Integration
 
 The app integrates with the MoneyMate backend API:
+
 - **Base URL**: https://bank-expense-tracker.onrender.com/api/v1
 - **Documentation**: Available at `/docs` endpoint
 - **Authentication**: JWT token-based
 - **Rate Limiting**: Configured per endpoint
 
 ### Key Endpoints
+
 - `POST /auth/login` - User authentication
 - `GET /accounts` - Fetch user accounts
 - `GET /transactions` - Fetch transactions
@@ -167,12 +182,14 @@ The app integrates with the MoneyMate backend API:
 ## 🔒 Security
 
 ### Data Protection
+
 - **Encryption**: All sensitive data encrypted at rest
 - **Secure Storage**: JWT tokens stored in encrypted storage
 - **API Security**: All requests use HTTPS
 - **Biometric Auth**: Optional fingerprint/face ID
 
 ### Privacy
+
 - **No Data Collection**: Personal financial data stays private
 - **GDPR Compliant**: User data deletion on request
 - **Local Processing**: Sensitive calculations done locally
@@ -180,6 +197,7 @@ The app integrates with the MoneyMate backend API:
 ## 🎨 UI/UX Guidelines
 
 ### Design System
+
 - **Color Palette**: Material Design 3 colors
 - **Typography**: System fonts with consistent scaling
 - **Spacing**: 8px grid system
@@ -187,6 +205,7 @@ The app integrates with the MoneyMate backend API:
 - **Accessibility**: WCAG 2.1 AA compliant
 
 ### Responsive Design
+
 - **Adaptive Layouts**: Works on phones and tablets
 - **Orientation Support**: Portrait and landscape
 - **Safe Areas**: Proper handling of notches/home indicators
@@ -194,6 +213,7 @@ The app integrates with the MoneyMate backend API:
 ## 🚀 Deployment
 
 ### Android
+
 ```bash
 # Generate signed APK
 npm run build:android:release
@@ -203,13 +223,16 @@ npm run build:android:bundle
 ```
 
 ### iOS
+
 ```bash
 # Build for App Store
 npm run build:ios:release
 ```
 
 ### CI/CD
+
 GitHub Actions workflow includes:
+
 - Automated testing
 - Code quality checks
 - Build generation
@@ -224,6 +247,7 @@ GitHub Actions workflow includes:
 5. Open a Pull Request
 
 ### Coding Standards
+
 - Follow ESLint configuration
 - Write TypeScript with strict mode
 - Add unit tests for new features
@@ -242,18 +266,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🗺 Roadmap
 
 ### v1.1.0
+
 - [ ] Biometric authentication
 - [ ] Receipt scanning with OCR
 - [ ] Bill reminders and notifications
 - [ ] Investment tracking
 
 ### v1.2.0
+
 - [ ] Multi-user family accounts
 - [ ] Shared budgets and goals
 - [ ] Advanced analytics and insights
 - [ ] Integration with banking APIs
 
 ### v2.0.0
+
 - [ ] AI-powered financial advisor
 - [ ] Cryptocurrency support
 - [ ] Advanced investment portfolio tracking

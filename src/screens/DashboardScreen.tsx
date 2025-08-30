@@ -193,12 +193,9 @@ const DashboardScreen: React.FC = () => {
                     <Text
                       style={[
                         styles.transactionAmount,
-                        {
-                          color:
-                            transaction.type === 'income'
-                              ? '#00B894'
-                              : '#E17055',
-                        },
+                        transaction.type === 'income'
+                          ? styles.incomeAmount
+                          : styles.expenseAmount,
                       ]}>
                       {transaction.type === 'income' ? '+' : '-'}
                       {formatCurrency(Math.abs(transaction.amount))}
@@ -378,6 +375,12 @@ const styles = StyleSheet.create({
   transactionAmount: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  incomeAmount: {
+    color: '#00B894',
+  },
+  expenseAmount: {
+    color: '#E17055',
   },
   transactionDate: {
     fontSize: 12,

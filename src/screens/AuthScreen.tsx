@@ -68,7 +68,9 @@ const AuthScreen: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      return;
+    }
 
     try {
       if (isLoginMode) {

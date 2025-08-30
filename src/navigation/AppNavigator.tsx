@@ -32,31 +32,46 @@ export type MainTabParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
+// Separate component for tab bar icon to avoid unstable nested components
+const TabBarIcon = ({
+  route,
+  color,
+  size,
+}: {
+  route: any;
+  color: string;
+  size: number;
+}) => {
+  let iconName;
+
+  if (route.name === 'Dashboard') {
+    iconName = 'dashboard';
+  } else if (route.name === 'Accounts') {
+    iconName = 'account-balance';
+  } else if (route.name === 'Transactions') {
+    iconName = 'receipt';
+  } else if (route.name === 'Reports') {
+    iconName = 'bar-chart';
+  } else if (route.name === 'Settings') {
+    iconName = 'settings';
+  }
+
+  return <Icon name={iconName || 'circle'} size={size} color={color} />;
+};
+
+// Create the screenOptions outside of the component to avoid recreation
+const getTabScreenOptions = ({route}: {route: any}) => ({
+  tabBarIcon: ({color, size}: {color: string; size: number}) => (
+    <TabBarIcon route={route} color={color} size={size} />
+  ),
+  tabBarActiveTintColor: '#6C5CE7',
+  tabBarInactiveTintColor: 'gray',
+  headerShown: false,
+});
+
 function MainTabNavigator() {
   return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({color, size}) => {
-          let iconName;
-
-          if (route.name === 'Dashboard') {
-            iconName = 'dashboard';
-          } else if (route.name === 'Accounts') {
-            iconName = 'account-balance';
-          } else if (route.name === 'Transactions') {
-            iconName = 'receipt';
-          } else if (route.name === 'Reports') {
-            iconName = 'bar-chart';
-          } else if (route.name === 'Settings') {
-            iconName = 'settings';
-          }
-
-          return <Icon name={iconName || 'circle'} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: '#6C5CE7',
-        tabBarInactiveTintColor: 'gray',
-        headerShown: false,
-      })}>
+    <Tab.Navigator screenOptions={getTabScreenOptions}>
       <Tab.Screen name="Dashboard" component={DashboardScreen} />
       <Tab.Screen name="Accounts" component={AccountsScreen} />
       <Tab.Screen name="Transactions" component={TransactionsScreen} />

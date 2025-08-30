@@ -20,6 +20,7 @@ const API_CONFIG = {
 ### Authentication Flow
 
 #### Login Process
+
 1. User enters credentials in `AuthScreen`
 2. Credentials are validated locally using `validators.ts`
 3. API call made to `POST /auth/login`
@@ -27,6 +28,7 @@ const API_CONFIG = {
 5. User redirected to main app
 
 #### Token Management
+
 - Tokens stored using `react-native-encrypted-storage`
 - Automatic token attachment via Axios interceptors
 - Automatic logout on 401 responses
@@ -34,7 +36,7 @@ const API_CONFIG = {
 
 ```typescript
 // Axios request interceptor
-axios.interceptors.request.use(async (config) => {
+axios.interceptors.request.use(async config => {
   const token = await EncryptedStorage.getItem('auth_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -48,6 +50,7 @@ axios.interceptors.request.use(async (config) => {
 Each domain has its own service class that handles API communication:
 
 #### AuthService
+
 ```typescript
 // Login
 const response = await AuthService.login(email, password);
@@ -60,6 +63,7 @@ await AuthService.logout();
 ```
 
 #### AccountService
+
 ```typescript
 // Get all accounts
 const accounts = await AccountService.getAccounts();
@@ -68,7 +72,7 @@ const accounts = await AccountService.getAccounts();
 const account = await AccountService.createAccount({
   name: 'My Checking',
   type: 'checking',
-  balance: 1000
+  balance: 1000,
 });
 
 // Update account
@@ -79,26 +83,28 @@ await AccountService.deleteAccount(accountId);
 ```
 
 #### TransactionService
+
 ```typescript
 // Get transactions with filters
 const transactions = await TransactionService.getTransactions({
   category: 'food',
   dateFrom: '2024-01-01',
-  dateTo: '2024-01-31'
+  dateTo: '2024-01-31',
 });
 
 // Create transaction
 const transaction = await TransactionService.createTransaction({
-  amount: 50.00,
+  amount: 50.0,
   description: 'Grocery shopping',
   category: 'food',
   type: 'expense',
   accountId: 'account123',
-  date: new Date().toISOString()
+  date: new Date().toISOString(),
 });
 ```
 
 #### BudgetService
+
 ```typescript
 // Get budgets
 const budgets = await BudgetService.getBudgets();
@@ -110,7 +116,7 @@ const budget = await BudgetService.createBudget({
   category: 'food',
   period: 'monthly',
   startDate: '2024-01-01',
-  endDate: '2024-01-31'
+  endDate: '2024-01-31',
 });
 
 // Get goals
@@ -168,7 +174,7 @@ export const fetchAccounts = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 ```
 
@@ -179,7 +185,7 @@ export const fetchAccounts = createAsyncThunk(
 ```
 AppNavigator (Stack)
 ├── SplashScreen
-├── OnboardingScreen  
+├── OnboardingScreen
 ├── AuthScreen
 └── MainTabNavigator (BottomTabs)
     ├── Dashboard
@@ -218,10 +224,10 @@ const linking = {
         screens: {
           Transactions: 'transactions/:id?',
           Accounts: 'accounts/:id?',
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };
 ```
 
@@ -239,14 +245,19 @@ const theme = {
     error: '#E17055',
   },
   spacing: {
-    xs: 4, sm: 8, md: 16, lg: 24, xl: 32
-  }
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+  },
 };
 ```
 
 ### Common Components
 
 #### Reusable Components Pattern
+
 ```typescript
 // src/components/common/CustomButton.tsx
 interface CustomButtonProps {
@@ -260,15 +271,14 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
   variant = 'primary',
-  loading = false
+  loading = false,
 }) => {
   return (
     <Button
       mode="contained"
       onPress={onPress}
       loading={loading}
-      style={[styles.button, styles[variant]]}
-    >
+      style={[styles.button, styles[variant]]}>
       {title}
     </Button>
   );
@@ -276,24 +286,27 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 ```
 
 #### Form Components
+
 ```typescript
 // src/components/forms/TransactionForm.tsx
 const TransactionForm = () => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
-  
+
   const handleSubmit = async () => {
     const validation = validateAmount(amount);
     if (!validation.isValid) {
       showError(validation.error);
       return;
     }
-    
-    await dispatch(createTransaction({
-      amount: parseFloat(amount),
-      description,
-      // ... other fields
-    }));
+
+    await dispatch(
+      createTransaction({
+        amount: parseFloat(amount),
+        description,
+        // ... other fields
+      }),
+    );
   };
 
   return (
@@ -322,19 +335,19 @@ const TransactionForm = () => {
 ```typescript
 // API Client error interceptor
 axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
+  response => response,
+  async error => {
     if (error.response?.status === 401) {
       await AuthService.logout();
       // Redirect to login
     }
-    
+
     if (!error.response) {
       showError('Network error. Please check your connection.');
     }
-    
+
     return Promise.reject(error);
-  }
+  },
 );
 ```
 
@@ -369,7 +382,7 @@ const MyComponent = () => {
 ```typescript
 import {validateEmail, validateAmount} from '../utils/validators';
 
-const validateForm = (data) => {
+const validateForm = data => {
   const errors = {};
 
   if (!validateEmail(data.email)) {
@@ -383,7 +396,7 @@ const validateForm = (data) => {
 
   return {
     isValid: Object.keys(errors).length === 0,
-    errors
+    errors,
   };
 };
 ```
@@ -397,7 +410,7 @@ const TransactionForm = () => {
 
   const handleAmountChange = (value: string) => {
     setAmount(value);
-    
+
     const validation = validateAmount(value);
     setAmountError(validation.isValid ? '' : validation.error);
   };
@@ -422,17 +435,13 @@ import {render, fireEvent} from '@testing-library/react-native';
 import {Provider} from 'react-redux';
 import {store} from '../store';
 
-const renderWithProvider = (component) => {
-  return render(
-    <Provider store={store}>
-      {component}
-    </Provider>
-  );
+const renderWithProvider = component => {
+  return render(<Provider store={store}>{component}</Provider>);
 };
 
 test('should handle transaction creation', async () => {
   const {getByText, getByPlaceholderText} = renderWithProvider(
-    <TransactionForm />
+    <TransactionForm />,
   );
 
   fireEvent.changeText(getByPlaceholderText('Amount'), '100');
@@ -455,7 +464,7 @@ test('should fetch accounts successfully', async () => {
   apiClient.get.mockResolvedValue({accounts: mockAccounts});
 
   const result = await AccountService.getAccounts();
-  
+
   expect(result).toEqual(mockAccounts);
   expect(apiClient.get).toHaveBeenCalledWith('/accounts');
 });
@@ -467,17 +476,21 @@ test('should fetch accounts successfully', async () => {
 
 ```typescript
 const TransactionsList = ({transactions}) => {
-  const renderTransaction = useCallback(({item}) => (
-    <TransactionItem transaction={item} />
-  ), []);
+  const renderTransaction = useCallback(
+    ({item}) => <TransactionItem transaction={item} />,
+    [],
+  );
 
-  const keyExtractor = useCallback((item) => item.id, []);
+  const keyExtractor = useCallback(item => item.id, []);
 
-  const getItemLayout = useCallback((data, index) => ({
-    length: ITEM_HEIGHT,
-    offset: ITEM_HEIGHT * index,
-    index,
-  }), []);
+  const getItemLayout = useCallback(
+    (data, index) => ({
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    }),
+    [],
+  );
 
   return (
     <FlatList
@@ -519,6 +532,7 @@ const ExpensiveComponent = React.memo(({data}) => {
 ### Adding New Features
 
 1. **Create Service Layer**
+
    ```typescript
    // src/services/NewFeatureService.ts
    export class NewFeatureService {
@@ -529,6 +543,7 @@ const ExpensiveComponent = React.memo(({data}) => {
    ```
 
 2. **Create Redux Slice**
+
    ```typescript
    // src/store/slices/newFeatureSlice.ts
    const newFeatureSlice = createSlice({
@@ -537,13 +552,14 @@ const ExpensiveComponent = React.memo(({data}) => {
      reducers: {
        // reducers
      },
-     extraReducers: (builder) => {
+     extraReducers: builder => {
        // async actions
-     }
+     },
    });
    ```
 
 3. **Create Screen Component**
+
    ```typescript
    // src/screens/NewFeatureScreen.tsx
    const NewFeatureScreen = () => {
@@ -559,6 +575,7 @@ const ExpensiveComponent = React.memo(({data}) => {
 ### Adding New API Endpoints
 
 1. **Update Service**
+
    ```typescript
    static async newEndpoint(params) {
      return await apiClient.post('/new-endpoint', params);
@@ -566,12 +583,13 @@ const ExpensiveComponent = React.memo(({data}) => {
    ```
 
 2. **Update Redux Actions**
+
    ```typescript
    export const newAction = createAsyncThunk(
      'feature/newAction',
-     async (params) => {
+     async params => {
        return await NewFeatureService.newEndpoint(params);
-     }
+     },
    );
    ```
 
@@ -587,30 +605,35 @@ const ExpensiveComponent = React.memo(({data}) => {
 ## Best Practices
 
 ### Code Organization
+
 - Keep components small and focused
 - Use TypeScript for type safety
 - Follow consistent naming conventions
 - Separate business logic from UI components
 
 ### State Management
+
 - Use Redux for global state
 - Keep component state for UI-specific state
 - Normalize state structure
 - Use selectors for computed values
 
 ### Error Handling
+
 - Always handle API errors gracefully
 - Provide meaningful error messages to users
 - Log errors for debugging
 - Implement retry mechanisms where appropriate
 
 ### Performance
+
 - Use FlatList for large lists
 - Implement proper memoization
 - Avoid inline functions in render
 - Use image optimization
 
 ### Security
+
 - Never store sensitive data in plain text
 - Validate all user inputs
 - Use HTTPS for all API calls
@@ -621,21 +644,25 @@ const ExpensiveComponent = React.memo(({data}) => {
 ### Common Issues
 
 1. **Metro bundler issues**
+
    ```bash
    npx react-native start --reset-cache
    ```
 
 2. **iOS build issues**
+
    ```bash
    cd ios && pod install && cd ..
    ```
 
 3. **Android build issues**
+
    ```bash
    cd android && ./gradlew clean && cd ..
    ```
 
 4. **Navigation issues**
+
    - Check navigation structure
    - Verify screen names match navigation config
    - Ensure proper type definitions
@@ -658,6 +685,7 @@ const ExpensiveComponent = React.memo(({data}) => {
 ### Build Process
 
 1. **Android**
+
    ```bash
    cd android
    ./gradlew assembleRelease
