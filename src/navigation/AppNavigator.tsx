@@ -13,12 +13,16 @@ import AccountsScreen from '../screens/AccountsScreen';
 import TransactionsScreen from '../screens/TransactionsScreen';
 import ReportsScreen from '../screens/ReportsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import AccountDetailScreen from '../screens/accounts/AccountDetailScreen';
+import TransactionDetailScreen from '../screens/transactions/TransactionDetailScreen';
 
 export type RootStackParamList = {
   Splash: undefined;
   Onboarding: undefined;
   Auth: undefined;
   Main: undefined;
+  AccountDetail: { id: string };
+  TransactionDetail: { id: string };
 };
 
 export type MainTabParamList = {
@@ -91,6 +95,16 @@ export default function AppNavigator() {
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Auth" component={AuthScreen} />
         <Stack.Screen name="Main" component={MainTabNavigator} />
+        <Stack.Screen
+          name="AccountDetail"
+          component={AccountDetailScreen}
+          options={{headerShown: true, title: 'Account Details'}}
+        />
+        <Stack.Screen
+          name="TransactionDetail"
+          component={TransactionDetailScreen}
+          options={{headerShown: true, title: 'Transaction Details'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
