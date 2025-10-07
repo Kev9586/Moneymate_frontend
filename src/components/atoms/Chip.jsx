@@ -5,7 +5,7 @@ const Chip = ({ label, selected = false, onSelect }) => {
   return (
     <motion.div
       onClick={onSelect}
-      className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer transition-colors duration-300 ${
+      className={`cursor-pointer rounded-full px-3 py-1 text-sm font-medium transition-colors duration-300 ${
         selected ? 'bg-primaryBlue text-white' : 'bg-gray-200 text-gray-700'
       }`}
       whileTap={{ scale: 0.95 }}

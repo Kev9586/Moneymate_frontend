@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 const Badge = ({ label, isNew = false }) => {
   return (
     <div className="relative">
-      <span className="px-2 py-1 bg-primaryGreen text-white text-xs font-bold rounded-full">
+      <span className="rounded-full bg-primaryGreen px-2 py-1 text-xs font-bold text-white">
         {label}
       </span>
       {isNew && (
         <motion.span
-          className="absolute top-0 right-0 -mt-1 -mr-1 h-3 w-3 bg-alertRed rounded-full"
+          className="absolute right-0 top-0 -mr-1 -mt-1 size-3 rounded-full bg-alertRed"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [1, 0.8, 1],

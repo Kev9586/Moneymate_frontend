@@ -3,7 +3,7 @@ import React from 'react';
 const Select = ({ options, onSelect }) => {
   return (
     <select
-      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-primaryBlue focus:border-primaryBlue transition-all duration-300"
+      className="w-full rounded-lg border border-gray-300 px-4 py-2 transition-all duration-300 focus:border-primaryBlue focus:outline-none focus:ring-primaryBlue"
       onChange={(e) => onSelect(e.target.value)}
     >
       {options.map(option => (

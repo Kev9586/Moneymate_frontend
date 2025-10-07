@@ -21,7 +21,7 @@ const Toast = ({ message, show, onDismiss }) => {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-textDark text-white px-6 py-3 rounded-lg shadow-medium z-50"
+          className="fixed bottom-10 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-textDark px-6 py-3 text-white shadow-medium"
           variants={toastVariants}
           initial="hidden"
           animate="visible"
