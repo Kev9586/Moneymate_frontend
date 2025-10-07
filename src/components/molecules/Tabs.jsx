@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
-const Tabs = ({ tabs }) => {
-  const [selectedTab, setSelectedTab] = useState(0);
-
+const Tabs = ({ tabs, activeTab, setActiveTab, scrollable }) => {
   return (
-    <div>
-      <div className="flex border-b border-gray-200">
-        {tabs.map((tab, index) => (
-          <button
-            key={tab.label}
-            className={`relative py-2 px-4 text-lg font-medium ${
-              selectedTab === index ? 'text-primaryBlue' : 'text-gray-500'
-            }`}
-            onClick={() => setSelectedTab(index)}
-          >
-            {tab.label}
-            {selectedTab === index && (
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primaryBlue"
-                layoutId="underline"
-              />
-            )}
-          </button>
-        ))}
-      </div>
-      <div className="p-4">
-        {tabs[selectedTab] && tabs[selectedTab].content}
-      </div>
+    <div
+      className={`flex border-b border-gray-700 ${
+        scrollable ? 'overflow-x-auto' : ''
+      }`}
+    >
+      {tabs.map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          className={`relative shrink-0 px-4 py-2 text-lg font-medium ${
+            activeTab === tab ? 'text-white' : 'text-gray-400'
+          }`}
+        >
+          {tab}
+          {activeTab === tab && (
+            <motion.div
+              className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-500"
+              layoutId="underline"
+            />
+          )}
+        </button>
+      ))}
     </div>
   );
 };

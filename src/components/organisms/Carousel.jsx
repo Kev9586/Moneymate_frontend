@@ -14,9 +14,9 @@ const Carousel = ({ items }) => {
         dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
       >
         {items.map((item, index) => (
-          <motion.div key={index} className="flex-shrink-0 w-64 p-2">
+          <motion.div key={index} className="w-64 shrink-0 p-2">
             <Card>
-              <h3 className="font-bold text-lg">{item.title}</h3>
+              <h3 className="text-lg font-bold">{item.title}</h3>
               <p>{item.content}</p>
             </Card>
           </motion.div>

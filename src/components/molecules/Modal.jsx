@@ -17,7 +17,7 @@ const Modal = ({ open, onClose, children }) => {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
           variants={backdropVariants}
           initial="hidden"
           animate="visible"
@@ -25,7 +25,7 @@ const Modal = ({ open, onClose, children }) => {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-lg shadow-medium p-6 w-full max-w-md"
+            className="w-full max-w-md rounded-lg bg-white p-6 shadow-medium"
             variants={modalVariants}
             onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside
           >

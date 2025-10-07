@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Button = ({ children, variant = 'primary', size = 'base', disabled = false, onClick }) => {
+const Button = ({ children, variant = 'primary', disabled = false, onClick, className }) => {
   const baseStyles = 'px-4 py-2 rounded-lg font-semibold transition-all duration-300';
 
   const variants = {
-    primary: 'bg-primaryBlue text-white hover:bg-opacity-90',
-    secondary: 'bg-primaryGreen text-white hover:bg-opacity-90',
-    outline: 'border border-primaryBlue text-primaryBlue hover:bg-primaryBlue hover:text-white',
+    primary: 'bg-blue-500 text-white hover:bg-opacity-90',
+    secondary: 'bg-green-500 text-white hover:bg-opacity-90',
+    outline: 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white',
   };
 
   const disabledStyles = 'opacity-50 cursor-not-allowed';
@@ -16,7 +16,7 @@ const Button = ({ children, variant = 'primary', size = 'base', disabled = false
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`${baseStyles} ${variants[variant]} ${disabled ? disabledStyles : ''}`}
+      className={`${baseStyles} ${variants[variant]} ${disabled ? disabledStyles : ''} ${className || ''}`}
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 300 }}
     >

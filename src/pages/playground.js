@@ -19,16 +19,18 @@ const Playground = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [selectedChip, setSelectedChip] = useState(null);
+  const [activePlaygroundTab, setActivePlaygroundTab] = useState('Tab 1');
 
   const selectOptions = [
     { value: '1', label: 'Option 1' },
     { value: '2', label: 'Option 2' },
   ];
 
-  const tabs = [
-    { label: 'Tab 1', content: <div>Content for Tab 1</div> },
-    { label: 'Tab 2', content: <div>Content for Tab 2</div> },
-  ];
+  const playgroundTabs = ['Tab 1', 'Tab 2'];
+  const tabContent = {
+    'Tab 1': <div>Content for Tab 1</div>,
+    'Tab 2': <div>Content for Tab 2</div>,
+  };
 
   const carouselItems = [
     { title: 'Item 1', content: 'This is the first item.' },
@@ -37,21 +39,21 @@ const Playground = () => {
   ];
 
   const EditIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L14.732 3.732z" />
     </svg>
   );
 
   return (
-    <div className="p-10 space-y-8 bg-bgLight dark:bg-dark-bg">
-      <div className="flex justify-between items-center">
+    <div className="space-y-8 bg-bgLight p-10 dark:bg-dark-bg">
+      <div className="flex items-center justify-between">
         <Heading size="2xl">Component Playground</Heading>
         <ThemeToggle />
       </div>
 
       <Card>
         <Heading>Typography</Heading>
-        <div className="space-y-2 mt-4">
+        <div className="mt-4 space-y-2">
           <Heading size="2xl">Section Heading (2xl)</Heading>
           <Heading size="lg">Card Title (lg)</Heading>
           <p className="text-base">Body text (base)</p>
@@ -61,7 +63,7 @@ const Playground = () => {
 
       <Card>
         <Heading>Buttons</Heading>
-        <div className="flex space-x-4 mt-4">
+        <div className="mt-4 flex space-x-4">
           <Button variant="primary">Primary</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="outline">Outline</Button>
@@ -71,7 +73,7 @@ const Playground = () => {
 
       <Card>
         <Heading>Input Fields</Heading>
-        <div className="space-y-4 mt-4">
+        <div className="mt-4 space-y-4">
           <InputField placeholder="Standard Input" />
           <InputField placeholder="Error Input" error />
         </div>
@@ -86,7 +88,7 @@ const Playground = () => {
 
       <Card>
         <Heading>Chips / Tags</Heading>
-        <div className="flex space-x-4 mt-4">
+        <div className="mt-4 flex space-x-4">
           <Chip label="Filter 1" selected={selectedChip === 1} onSelect={() => setSelectedChip(1)} />
           <Chip label="Filter 2" selected={selectedChip === 2} onSelect={() => setSelectedChip(2)} />
         </div>
@@ -101,7 +103,7 @@ const Playground = () => {
 
       <Card>
         <Heading>Badge</Heading>
-        <div className="flex space-x-4 mt-4">
+        <div className="mt-4 flex space-x-4">
           <Badge label="Active" />
           <Badge label="New" isNew />
         </div>
@@ -130,7 +132,12 @@ const Playground = () => {
       <Card>
         <Heading>Tabs</Heading>
         <div className="mt-4">
-          <Tabs tabs={tabs} />
+          <Tabs
+            tabs={playgroundTabs}
+            activeTab={activePlaygroundTab}
+            setActiveTab={setActivePlaygroundTab}
+          />
+          <div className="p-4">{tabContent[activePlaygroundTab]}</div>
         </div>
       </Card>
 

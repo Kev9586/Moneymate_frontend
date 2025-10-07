@@ -5,7 +5,7 @@ const FAB = ({ onClick, icon }) => {
   return (
     <motion.button
       onClick={onClick}
-      className="fixed bottom-10 right-10 bg-primaryBlue text-white w-16 h-16 rounded-full flex items-center justify-center shadow-medium z-40"
+      className="fixed bottom-10 right-10 z-40 flex size-16 items-center justify-center rounded-full bg-primaryBlue text-white shadow-medium"
       whileHover={{ scale: 1.1, y: -5 }}
       whileTap={{ scale: 0.9 }}
       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
