@@ -3,7 +3,20 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #E6F0FF 0%, #FFFFFF 100%);
-  color: #1A1A1A;
+  font-family: theme('fontFamily.body');
+  @apply bg-bgLight text-textDark;
+  @apply dark:bg-dark-bg dark:text-dark-text;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: theme('fontFamily.heading');
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-primary-gradient bg-clip-text text-transparent;
+  }
+  .card-shadow {
+    @apply shadow-soft;
+  }
 }

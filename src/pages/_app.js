@@ -1,11 +1,11 @@
-import BaseLayout from '../layouts/BaseLayout';
 import '../styles/globals.css';
+import { AnimatePresence } from 'framer-motion';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   return (
-    <BaseLayout>
-      <Component {...pageProps} />
-    </BaseLayout>
+    <AnimatePresence mode="wait">
+      <Component {...pageProps} key={router.route} />
+    </AnimatePresence>
   );
 }
 

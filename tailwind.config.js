@@ -1,26 +1,45 @@
+const { theme } = require('./src/constants/theme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        primaryBlue: "#0D6EFD",
-        primaryGreen: "#00B87C",
-        alertRed: "#FF4D4F",
+        primaryBlue: theme.colors.primaryBlue,
+        primaryGreen: theme.colors.primaryGreen,
+        alertRed: theme.colors.alertRed,
+        textDark: theme.colors.textDark,
+        textLight: theme.colors.textLight,
+        bgLight: theme.colors.bgLight,
+        dark: {
+          bg: '#1A1A1A',
+          text: '#FFFFFF',
+          card: '#2C2C2C'
+        }
       },
       borderRadius: {
-        xl: "16px",
-        "2xl": "20px",
+        md: theme.radius.md,
+        lg: theme.radius.lg,
+        xl: theme.radius.xl,
       },
       boxShadow: {
-        soft: "0 4px 10px rgba(0,0,0,0.1)",
+        soft: theme.shadow.soft,
+        medium: theme.shadow.medium,
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
+        heading: [theme.font.heading],
+        body: [theme.font.body],
+      },
+      fontSize: {
+        '2xl': '1.5rem', // section headings
+        'lg': '1.125rem', // card titles
+        'base': '1rem', // body
+        'sm': '0.875rem', // labels
       },
       backgroundImage: {
-        'primary-gradient': 'linear-gradient(to right, #0D6EFD, #00B87C)',
+        'primary-gradient': theme.colors.primaryGradient,
       }
     },
   },
