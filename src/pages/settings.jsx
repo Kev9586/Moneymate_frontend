@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { FiUser, FiShield, FiBell, FiLogOut, FiChevronRight } from 'react-icons/fi';
 import MainLayout from '../layouts/MainLayout';
 import { useRouter } from 'next/router';
+import { useToast } from '../context/ToastContext';
+import { logout } from '../api/user';
 
 const settingsItems = [
   { label: 'Profile', icon: FiUser, href: '/settings/profile' },
@@ -12,10 +14,18 @@ const settingsItems = [
 
 const SettingsScreen = () => {
   const router = useRouter();
+  const { addToast } = useToast();
 
-  const handleLogout = () => {
-    // Add logout logic here
-    router.push('/auth');
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout failed, but proceeding with client-side logout.', error);
+    } finally {
+      localStorage.removeItem('token');
+      addToast({ type: 'success', message: 'You have been logged out.' });
+      router.push('/auth');
+    }
   };
 
   return (

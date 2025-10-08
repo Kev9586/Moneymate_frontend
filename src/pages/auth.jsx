@@ -3,25 +3,44 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Button from '../components/atoms/Button';
 import InputField from '../components/atoms/InputField';
-import Modal from '../components/molecules/Modal';
 import Toast from '../components/molecules/Toast';
 import Tabs from '../components/molecules/Tabs';
+import { login, signup } from '../api/auth';
 
 const AuthScreen = () => {
   const authTabs = ['Login', 'Sign Up'];
   const [activeTab, setActiveTab] = useState(authTabs[0]);
-  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleAuth = () => {
-    // Replace with actual authentication logic
-    setShowOtpModal(true);
-  };
+  const handleAuth = async () => {
+    setLoading(true);
+    setError(null);
 
-  const handleOtpSubmit = () => {
-    setShowOtpModal(false);
-    router.push('/dashboard');
+    try {
+      let response;
+      if (activeTab === 'Login') {
+        response = await login({ email, password });
+      } else {
+        if (password !== confirmPassword) {
+          throw new Error('Passwords do not match');
+        }
+        response = await signup({ email, password });
+      }
+
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        router.push('/dashboard');
+      }
+    } catch (err) {
+      setError(err.message || 'An error occurred.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderForm = () => (
@@ -37,17 +56,31 @@ const AuthScreen = () => {
         handleAuth();
       }}
     >
-      <InputField placeholder="Email" type="email" className="mb-4" />
-      <InputField placeholder="Password" type="password" className="mb-6" />
+      <InputField
+        placeholder="Email"
+        type="email"
+        className="mb-4"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <InputField
+        placeholder="Password"
+        type="password"
+        className="mb-6"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
       {activeTab === 'Sign Up' && (
         <InputField
           placeholder="Confirm Password"
           type="password"
           className="mb-6"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
       )}
-      <Button type="submit">
-        {activeTab}
+      <Button type="submit" disabled={loading}>
+        {loading ? 'Processing...' : activeTab}
       </Button>
     </motion.form>
   );
@@ -61,22 +94,6 @@ const AuthScreen = () => {
 
         <AnimatePresence mode="wait">{renderForm()}</AnimatePresence>
       </div>
-
-      <AnimatePresence>
-        {showOtpModal && (
-          <Modal
-            title="Enter OTP"
-            onClose={() => setShowOtpModal(false)}
-          >
-            <div className="flex flex-col items-center">
-              <InputField placeholder="6-digit OTP" className="mb-4" />
-              <Button onClick={handleOtpSubmit} className="w-full">
-                Verify
-              </Button>
-            </div>
-          </Modal>
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {error && <Toast message={error} onClose={() => setError(null)} />}
