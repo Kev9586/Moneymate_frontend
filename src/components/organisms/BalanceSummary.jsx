@@ -2,9 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowUp, FiArrowDown } from 'react-icons/fi';
 
-const BalanceSummary = () => {
-  const income = 3250.00;
-  const expenses = 1475.50;
+const BalanceSummary = ({ summary }) => {
+  const { income = 0, expenses = 0 } = summary || {};
 
   return (
     <motion.div className="rounded-lg bg-gray-800 p-6">

@@ -1,15 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const transactions = [
-  { id: 1, description: 'Starbucks', amount: -5.75, category: 'Food' },
-  { id: 2, description: 'Salary', amount: 2500, category: 'Income' },
-  { id: 3, description: 'Netflix', amount: -15.99, category: 'Bills' },
-  { id: 4, description: 'Gas', amount: -45.30, category: 'Transport' },
-  { id: 5, description: 'Amazon', amount: -120.00, category: 'Shopping' },
-];
+const RecentTransactions = ({ transactions }) => {
+  if (!transactions || transactions.length === 0) {
+    return (
+      <div className="text-center text-gray-400">
+        No recent transactions found.
+      </div>
+    );
+  }
 
-const RecentTransactions = () => {
   return (
     <motion.div className="rounded-lg bg-gray-800 p-6">
       <h2 className="mb-4 text-lg font-semibold text-white">Recent Transactions</h2>

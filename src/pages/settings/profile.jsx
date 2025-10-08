@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import MainLayout from '../../layouts/MainLayout';
 import InputField from '../../components/atoms/InputField';
 import Button from '../../components/atoms/Button';
+import { useToast } from '../../context/ToastContext';
+import { updatePreferences } from '../../api/user';
 
 const ProfileScreen = () => {
   const router = useRouter();
+  const { addToast } = useToast();
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await updatePreferences({ fullName, email });
+      addToast({ type: 'success', message: 'Profile updated successfully!' });
+    } catch {
+      addToast({ type: 'error', message: 'Failed to update profile.' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <MainLayout>
@@ -26,16 +45,27 @@ const ProfileScreen = () => {
         >
           <div className="mb-6 flex flex-col items-center">
             <div className="mb-4 flex size-24 items-center justify-center rounded-full bg-blue-500">
-                <span className="text-4xl font-bold text-white">K</span>
+              <span className="text-4xl font-bold text-white">{fullName ? fullName.charAt(0).toUpperCase() : 'U'}</span>
             </div>
-            <h2 className="text-xl font-bold text-white">Keval</h2>
-            <p className="text-gray-400">keval@moneymate.com</p>
+            <h2 className="text-xl font-bold text-white">{fullName || 'User'}</h2>
+            <p className="text-gray-400">{email || 'user@example.com'}</p>
           </div>
 
-          <form className="space-y-4">
-            <InputField label="Full Name" defaultValue="Keval" />
-            <InputField label="Email Address" type="email" defaultValue="keval@moneymate.com" />
-            <Button type="submit" className="w-full">Save Changes</Button>
+          <form className="space-y-4" onSubmit={handleSave}>
+            <InputField
+              label="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+            <InputField
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Saving...' : 'Save Changes'}
+            </Button>
           </form>
         </motion.div>
       </div>

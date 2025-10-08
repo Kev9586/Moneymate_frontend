@@ -1,60 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import { FiPlus, FiEdit, FiTrash, FiSearch } from 'react-icons/fi';
+import useSWR, { mutate } from 'swr';
 import MainLayout from '../layouts/MainLayout';
-import Modal from '../components/molecules/Modal';
-import Button from '../components/atoms/Button';
-import InputField from '../components/atoms/InputField';
+import { useToast } from '../context/ToastContext';
+import { addTransaction, updateTransaction, deleteTransaction } from '../api/transactions';
+import { fetcher } from '../utils/fetcher';
+import LoadingState from '../components/molecules/LoadingState';
+import EmptyState from '../components/molecules/EmptyState';
+import ErrorState from '../components/molecules/ErrorState';
 
-const initialTransactions = [
-  { id: 1, description: 'Starbucks Coffee', amount: -5.75, category: 'Food', date: '2023-10-25' },
-  { id: 2, description: 'Salary Deposit', amount: 2500, category: 'Income', date: '2023-10-24' },
-  { id: 3, description: 'Netflix Subscription', amount: -15.99, category: 'Entertainment', date: '2023-10-23' },
-  { id: 4, description: 'Gasoline', amount: -45.50, category: 'Transport', date: '2023-10-22' },
-];
+const TransactionModal = dynamic(() => import('../components/organisms/TransactionModal'), {
+  loading: () => <p>Loading...</p>,
+});
 
 const TransactionsScreen = () => {
-  const [transactions, setTransactions] = useState(initialTransactions);
+  const { data, error, isLoading } = useSWR('/transactions', fetcher);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const { addToast } = useToast();
 
-  const filteredTransactions = transactions.filter(
-    (t) =>
-      t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const transactions = data?.transactions || [];
+
+  const filteredTransactions = useMemo(
+    () =>
+      transactions.filter(
+        (t) =>
+          t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (t.category && t.category.toLowerCase().includes(searchTerm.toLowerCase()))
+      ),
+    [transactions, searchTerm]
   );
 
-  const handleAddTransaction = () => {
+  const handleAddClick = () => {
     setSelectedTransaction(null);
     setIsModalOpen(true);
   };
 
-  const handleEditTransaction = (transaction) => {
+  const handleEditClick = (transaction) => {
     setSelectedTransaction(transaction);
     setIsModalOpen(true);
   };
 
-  const handleDeleteTransaction = (id) => {
-    setTransactions(transactions.filter((t) => t.id !== id));
+  const handleDeleteClick = async (id) => {
+    try {
+      await deleteTransaction(id);
+      addToast({ type: 'success', message: 'Transaction deleted.' });
+      mutate('/transactions');
+    } catch {
+      addToast({ type: 'error', message: 'Failed to delete transaction.' });
+    }
   };
 
-  const handleSaveTransaction = (formData) => {
-    if (selectedTransaction) {
-      setTransactions(
-        transactions.map((t) =>
-          t.id === selectedTransaction.id ? { ...t, ...formData } : t
-        )
-      );
-    } else {
-      const newTransaction = {
-        id: Date.now(),
-        ...formData,
-        date: new Date().toISOString().split('T')[0],
-      };
-      setTransactions([newTransaction, ...transactions]);
+  const handleSave = async (formData) => {
+    try {
+      if (selectedTransaction) {
+        await updateTransaction(selectedTransaction.id, formData);
+        addToast({ type: 'success', message: 'Transaction updated.' });
+      } else {
+        await addTransaction(formData);
+        addToast({ type: 'success', message: 'Transaction added.' });
+      }
+      mutate('/transactions');
+      setIsModalOpen(false);
+    } catch {
+      addToast({ type: 'error', message: `Failed to save transaction.` });
     }
-    setIsModalOpen(false);
+  };
+
+  const renderContent = () => {
+    if (isLoading) return <LoadingState message="Fetching transactions..." />;
+    if (error) return <ErrorState message="Could not fetch transactions." onRetry={() => mutate('/transactions')} />;
+
+    if (transactions.length === 0) {
+      return <EmptyState message="No transactions yet. Add one to get started!" onAction={handleAddClick} actionText="Add Transaction" />;
+    }
+
+    return (
+      <div className="space-y-3">
+        <AnimatePresence>
+          {filteredTransactions.map((transaction) => (
+            <TransactionRow
+              key={transaction.id}
+              transaction={transaction}
+              onEdit={() => handleEditClick(transaction)}
+              onDelete={() => handleDeleteClick(transaction.id)}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
+    );
   };
 
   return (
@@ -70,23 +107,11 @@ const TransactionsScreen = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-
-        <div className="space-y-3">
-          <AnimatePresence>
-            {filteredTransactions.map((transaction) => (
-              <TransactionRow
-                key={transaction.id}
-                transaction={transaction}
-                onEdit={() => handleEditTransaction(transaction)}
-                onDelete={() => handleDeleteTransaction(transaction.id)}
-              />
-            ))}
-          </AnimatePresence>
-        </div>
+        {renderContent()}
       </div>
 
       <motion.button
-        onClick={handleAddTransaction}
+        onClick={handleAddClick}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="fixed bottom-24 right-6 z-10 rounded-full bg-blue-500 p-4 text-white shadow-lg sm:bottom-6"
@@ -94,12 +119,14 @@ const TransactionsScreen = () => {
         <FiPlus size={24} />
       </motion.button>
 
-      <TransactionModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSaveTransaction}
-        transaction={selectedTransaction}
-      />
+      {isModalOpen && (
+        <TransactionModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+          transaction={selectedTransaction}
+        />
+      )}
     </MainLayout>
   );
 };
@@ -148,61 +175,6 @@ const TransactionRow = ({ transaction, onEdit, onDelete }) => {
         </motion.span>
       </div>
     </motion.div>
-  );
-};
-
-
-const TransactionModal = ({ isOpen, onClose, onSave, transaction }) => {
-  const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('');
-
-  React.useEffect(() => {
-    if (transaction) {
-      setDescription(transaction.description);
-      setAmount(transaction.amount);
-      setCategory(transaction.category);
-    } else {
-      setDescription('');
-      setAmount('');
-      setCategory('');
-    }
-  }, [transaction]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({ description, amount: parseFloat(amount), category });
-  };
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <Modal title={transaction ? 'Edit Transaction' : 'Add Transaction'} onClose={onClose}>
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-            <InputField
-              label="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-            <InputField
-              label="Amount"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-            <InputField
-              label="Category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
-            />
-            <Button type="submit">{transaction ? 'Save Changes' : 'Add Transaction'}</Button>
-          </form>
-        </Modal>
-      )}
-    </AnimatePresence>
   );
 };
 
