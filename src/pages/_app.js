@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AnimatePresence } from 'framer-motion';
+import '../lib/firebase'; // Initialize Firebase
 import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
