@@ -2,25 +2,30 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
+import LogoMark from '../components/LogoMark';
 
 const Auth: React.FC = () => {
   const [tab, setTab] = useState<'login' | 'signup'>('login');
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-primary-900">
-      <div className="w-full max-w-md p-4 bg-white rounded-xl shadow-lg">
-        <div className="flex justify-center mb-6">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-dark-bg text-light-text p-4">
+      <div className="text-center mb-8">
+        <LogoMark className="w-24 h-24 mx-auto" />
+        <h1 className="text-3xl font-bold mt-2">Verification</h1>
+      </div>
+      <div className="w-full max-w-md p-8 bg-primary rounded-xl shadow-lg">
+        <div className="flex justify-center border-b border-gray-700 mb-6">
           <button
-            className={`px-4 py-2 font-semibold rounded-l-lg ${tab === 'login' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-primary-600'}`}
+            className={`px-6 py-2 font-semibold ${tab === 'login' ? 'border-b-2 border-accent text-accent' : 'text-gray-400'}`}
             onClick={() => setTab('login')}
           >
-            Login
+            LOGIN
           </button>
           <button
-            className={`px-4 py-2 font-semibold rounded-r-lg ${tab === 'signup' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-primary-600'}`}
+            className={`px-6 py-2 font-semibold ${tab === 'signup' ? 'border-b-2 border-accent text-accent' : 'text-gray-400'}`}
             onClick={() => setTab('signup')}
           >
-            Signup
+            SIGNUP
           </button>
         </div>
         <motion.div

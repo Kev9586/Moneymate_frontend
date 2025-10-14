@@ -1,44 +1,30 @@
-import { authClient } from './firebase';
-import type { User } from '../types';
-import { onAuthStateChanged, getIdToken } from 'firebase/auth';
-
-const storage = window.localStorage;
-
-export const auth = {
-  async bootstrap(): Promise<{ firstRun: boolean; token: string | null }> {
-    const firstRun = storage.getItem('firstRun') !== 'false';
-
-    // If there's a Firebase user, get ID token
-    return new Promise((resolve) => {
-      onAuthStateChanged(authClient, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          resolve({ firstRun, token });
-        } else {
-          const token = storage.getItem('token');
-          resolve({ firstRun, token });
-        }
-      });
-    });
+const auth = {
+  bootstrap: async (): Promise<{ firstRun: boolean; token: string | null }> => {
+    // In a real app, this would involve secure storage
+    const firstRun = localStorage.getItem('firstRun') !== 'false';
+    const token = localStorage.getItem('token');
+    return { firstRun, token };
   },
 
-  setFirstRun(val: boolean) {
-    storage.setItem('firstRun', val ? 'true' : 'false');
+  setFirstRun: (value: boolean): void => {
+    localStorage.setItem('firstRun', String(value));
   },
 
-  setUser(user: User) {
-    storage.setItem('user', JSON.stringify(user));
+  login: async (email: string, pass: string): Promise<{ token: string }> => {
+    // Mock API call
+    if (email === 'test@example.com' && pass === 'password') {
+      const token = 'fake-jwt-token';
+      localStorage.setItem('token', token);
+      return { token };
+    }
+    throw new Error('Invalid credentials');
   },
 
-  setToken(token: string) {
-    storage.setItem('token', token);
-  },
-
-  clear() {
-    storage.removeItem('token');
-    storage.removeItem('refreshToken');
-    storage.removeItem('user');
-    storage.removeItem('firstRun');
+  signup: async (email: string, pass: string): Promise<{ token: string }> => {
+    // Mock API call
+    const token = 'fake-jwt-token';
+    localStorage.setItem('token', token);
+    return { token };
   },
 };
 

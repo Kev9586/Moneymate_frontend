@@ -7,21 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        'dark-bg': '#0D1C22',
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          DEFAULT: '#1A3A42',
+          dark: '#122C34',
         },
+        accent: {
+          DEFAULT: '#25D366',
+          hover: '#1DB954',
+        },
+        'light-text': '#E2E8F0',
+        'input-bg': '#1E293B',
       },
       fontFamily: {
-        sans: ['Inter var', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
       },
     },
   },
