@@ -1,79 +1,84 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import * as z from 'zod';
+import { motion } from 'framer-motion';
+import useAuthStore from '../store/useAuthStore';
 
-const signupSchema = z.object({
-  full_name: z.string().min(3, 'Full name is required'),
-  username: z.string().min(3, 'Username is required'),
-  email: z.string().email('Invalid email'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-});
+const signupSchema = z
+  .object({
+    email: z.string().email({ message: 'Invalid email address' }),
+    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
 
-type SignupFormValues = z.infer<typeof signupSchema>;
+type SignupFormInputs = z.infer<typeof signupSchema>;
 
 const SignupForm: React.FC = () => {
-  const navigate = useNavigate();
+  const { signup, loading, error } = useAuthStore();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SignupFormValues>({ resolver: zodResolver(signupSchema) });
+    formState: { errors },
+  } = useForm<SignupFormInputs>({
+    resolver: zodResolver(signupSchema),
+  });
 
-  const onSubmit = async (values: SignupFormValues) => {
-    try {
-      // Start signup init - depending on API this may return a pending OTP requirement
-      const response = await api.post('/auth/signup', values);
-      // If the API requires OTP step, open OTP modal; for now assume success returns token
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem('token', token);
-        navigate('/dashboard', { replace: true });
-      } else {
-        // TODO: handle OTP flow
-        navigate('/auth', { replace: true });
-      }
-    } catch (error: any) {
-      console.error(error);
-      // TODO: show toast
-    }
+  const onSubmit = (data: SignupFormInputs) => {
+    signup(data.email, data.password);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {error && <p className="text-sm text-red-600 bg-red-100 p-3 rounded-md">{error}</p>}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Full name</label>
-        <input {...register('full_name')} className="mt-1 block w-full px-3 py-2 border rounded-md" />
-        {errors.full_name && <p className="text-red-500 text-sm">{errors.full_name.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Username</label>
-        <input {...register('username')} className="mt-1 block w-full px-3 py-2 border rounded-md" />
-        {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
-        <input {...register('email')} className="mt-1 block w-full px-3 py-2 border rounded-md" />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Password</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-400">
+          Email
+        </label>
         <input
+          id="email"
+          type="email"
+          {...register('email')}
+          className="mt-1 block w-full px-4 py-3 bg-input-bg border border-gray-700 rounded-md shadow-sm text-light-text placeholder-gray-500 focus:outline-none focus:ring-accent focus:border-accent sm:text-sm"
+        />
+        {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>}
+      </div>
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-400">
+          Password
+        </label>
+        <input
+          id="password"
           type="password"
           {...register('password')}
-          className="mt-1 block w-full px-3 py-2 border rounded-md"
+          className="mt-1 block w-full px-4 py-3 bg-input-bg border border-gray-700 rounded-md shadow-sm text-light-text placeholder-gray-500 focus:outline-none focus:ring-accent focus:border-accent sm:text-sm"
         />
-        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+        {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>}
       </div>
-
-      <button type="submit" disabled={isSubmitting} className="w-full py-2 bg-primary-600 text-white rounded-md font-semibold">
-        {isSubmitting ? 'Creating account...' : 'Create account'}
-      </button>
+      <div>
+        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-400">
+          Confirm Password
+        </label>
+        <input
+          id="confirmPassword"
+          type="password"
+          {...register('confirmPassword')}
+          className="mt-1 block w-full px-4 py-3 bg-input-bg border border-gray-700 rounded-md shadow-sm text-light-text placeholder-gray-500 focus:outline-none focus:ring-accent focus:border-accent sm:text-sm"
+        />
+        {errors.confirmPassword && <p className="mt-2 text-sm text-red-600">{errors.confirmPassword.message}</p>}
+      </div>
+      <motion.button
+        type="submit"
+        className="w-full py-3 px-4 bg-accent text-dark-bg font-semibold rounded-md shadow-sm hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent disabled:opacity-50"
+        whileTap={{ scale: 0.98 }}
+        disabled={loading}
+      >
+        {loading ? 'Signing up...' : 'SIGNUP'}
+      </motion.button>
     </form>
   );
 };

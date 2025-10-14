@@ -1,87 +1,100 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import Lottie from 'lottie-react';
+import welcomeAnimation from '../assets/lottie/welcome.json';
+import securityAnimation from '../assets/lottie/security.json';
+import getStartedAnimation from '../assets/lottie/get-started.json';
 
 const slides = [
   {
     title: 'Welcome to MoneyMate',
     description: 'Your personal finance companion. Track, save, and grow.',
-    illustration: <div className="w-32 h-32 bg-primary-400 rounded-full" />,
+    animationData: welcomeAnimation,
   },
   {
     title: 'Security First',
     description: 'Your data is encrypted and protected. Privacy guaranteed.',
-    illustration: <div className="w-32 h-32 bg-primary-600 rounded-full" />,
+    animationData: securityAnimation,
   },
   {
     title: 'Get Started',
     description: 'Let’s set up your account and begin your journey.',
-    illustration: <div className="w-32 h-32 bg-primary-800 rounded-full" />,
+    animationData: getStartedAnimation,
   },
 ];
 
 const Onboarding: React.FC = () => {
-  const [index, setIndex] = useState(0);
-  const lastSwipe = useRef(Date.now());
+  const [swiper, setSwiper] = useState<any>(null);
+  const [isThrottled, setIsThrottled] = useState(false);
   const navigate = useNavigate();
-
-  const handleSwipe = (direction: 'left' | 'right') => {
-    const now = Date.now();
-    if (now - lastSwipe.current < 250) return; // Throttle swipes
-    lastSwipe.current = now;
-    if (direction === 'left' && index < slides.length - 1) {
-      setIndex(index + 1);
-    } else if (direction === 'right' && index > 0) {
-      setIndex(index - 1);
-    }
-  };
 
   const handleCTA = () => {
     localStorage.setItem('firstRun', 'false');
     navigate('/auth', { replace: true });
   };
 
+  const handleSlideChange = (direction: 'next' | 'prev') => {
+    if (isThrottled) return;
+    setIsThrottled(true);
+    if (direction === 'next') {
+      swiper?.slideNext();
+    } else {
+      swiper?.slidePrev();
+    }
+    setTimeout(() => setIsThrottled(false), 250); // 250ms throttle
+  };
+
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-primary-900">
-      <div className="w-full max-w-md p-4">
-        <motion.div
-          key={index}
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ type: 'spring', duration: 0.4 }}
-          className="flex flex-col items-center text-center"
-        >
-          {slides[index].illustration}
-          <h2 className="mt-6 text-2xl font-bold text-white">{slides[index].title}</h2>
-          <p className="mt-2 text-lg text-primary-100">{slides[index].description}</p>
-        </motion.div>
-        <div className="flex justify-between mt-8">
+    <div className="min-h-screen w-full flex items-center justify-center bg-dark-bg text-light-text">
+      <div className="w-full max-w-md p-4 text-center">
+        <Swiper onSwiper={setSwiper} className="w-full" allowTouchMove={false}>
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center"
+              >
+                <Lottie animationData={slide.animationData} className="w-64 h-64" />
+                <h2 className="mt-6 text-3xl font-bold">{slide.title}</h2>
+                <p className="mt-2 text-lg text-gray-400">{slide.description}</p>
+              </motion.div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="flex justify-between items-center mt-8 px-4">
           <button
-            className="px-4 py-2 text-primary-100"
-            disabled={index === 0}
-            onClick={() => handleSwipe('right')}
-          >
-            Prev
-          </button>
-          <button
-            className="px-4 py-2 text-primary-100"
-            disabled={index === slides.length - 1}
-            onClick={() => handleSwipe('left')}
-          >
-            Next
-          </button>
-        </div>
-        {index === slides.length - 1 && (
-          <motion.button
-            className="mt-8 w-full py-3 bg-primary-600 text-white rounded-lg font-semibold text-lg shadow-lg"
-            whileTap={{ scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 300 }}
+            className="px-4 py-2 text-gray-400 disabled:opacity-50"
             onClick={handleCTA}
+            disabled={isThrottled}
           >
-            Get Started
-          </motion.button>
-        )}
+            SKIP
+          </button>
+
+          {swiper?.isEnd ? (
+             <motion.button
+             className="px-6 py-3 bg-accent text-dark-bg rounded-lg font-semibold text-lg shadow-lg"
+             whileTap={{ scale: 0.96 }}
+             transition={{ type: 'spring', stiffness: 300 }}
+             onClick={handleCTA}
+           >
+             GET STARTED
+           </motion.button>
+          ) : (
+            <button
+            className="px-4 py-2 bg-accent text-dark-bg rounded-full font-bold disabled:opacity-50"
+            onClick={() => handleSlideChange('next')}
+            disabled={isThrottled || swiper?.isEnd}
+          >
+            NEXT
+          </button>
+          )}
+
+        </div>
       </div>
     </div>
   );
