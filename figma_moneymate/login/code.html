@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MoneyMate - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&amp;family=Be+Vietnam+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#42a5e4", "background-light": "#f6f7f8", "background-dark": "#111b21", "dark-slate-blue": "#483D8B", "midnight-blue": "#191970"}, fontFamily: {display: "Be Vietnam Pro", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+<style>
+        body {
+            background: linear-gradient(to bottom, #483D8B, #191970);
+            min-height: 100vh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body bg-background-dark text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col items-center justify-center bg-transparent group/design-root overflow-x-hidden p-4">
+<!-- App Logo -->
+<h1 class="font-display text-white tracking-light text-[32px] font-bold leading-tight text-center pb-3 pt-6">MoneyMate</h1>
+<!-- Welcome Message -->
+<p class="text-gray-300 text-lg font-normal leading-normal pb-12 text-center">Securely Log In</p>
+<div class="w-full max-w-sm space-y-6">
+<!-- Email or Username Input -->
+<div class="flex flex-col min-w-40 flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2">Email or Username</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg border border-gray-600 bg-[#292c38]/50 focus-within:border-primary transition-colors duration-300">
+<div class="text-gray-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined" style="font-size: 24px;">person</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-14 placeholder:text-gray-400 p-4 text-base font-normal leading-normal" placeholder="Enter your email or username" value=""/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col min-w-40 flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2">Password</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg border border-gray-600 bg-[#292c38]/50 focus-within:border-primary transition-colors duration-300">
+<div class="text-gray-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined" style="font-size: 24px;">lock</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-14 placeholder:text-gray-400 p-4 text-base font-normal leading-normal" placeholder="Enter your password" type="password" value=""/>
+<button aria-label="Toggle password visibility" class="text-gray-400 flex items-center justify-center px-4">
+<span class="material-symbols-outlined" style="font-size: 24px;">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Forgot Password Link -->
+<div class="text-right">
+<a class="text-gray-300 text-sm font-normal leading-normal underline hover:text-primary transition-colors duration-300" href="#">Forgot Password?</a>
+</div>
+<!-- Login Button -->
+<div class="flex py-3 justify-center">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-5 bg-primary text-midnight-blue text-base font-bold leading-normal tracking-[0.015em] hover:bg-cyan-400 transition-colors duration-300">
+<span class="truncate">Login</span>
+</button>
+</div>
+<!-- Create Account Link -->
+<p class="text-gray-300 text-sm font-normal leading-normal text-center">
+                Don't have an account? <a class="font-bold text-white hover:text-primary transition-colors duration-300" href="#">Create Account</a>
+</p>
+</div>
+<div class="h-5"></div>
+</div>
+</body></html>
