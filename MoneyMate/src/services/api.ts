@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { MMKV } from 'react-native-mmkv';
+import { BASE_API_URL } from '@env';
 
 const storage = new MMKV();
 
 const api = axios.create({
-  baseURL: process.env.BASE_API_URL,
+  baseURL: BASE_API_URL,
 });
 
 api.interceptors.request.use(
