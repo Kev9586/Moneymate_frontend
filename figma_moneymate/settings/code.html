@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MoneyMate Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&amp;family=Be+Vietnam+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#42a5e4", "background-light": "#f6f7f8", "background-dark": "#111b21"}, fontFamily: {display: "Be Vietnam Pro", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-[#483D8B] to-[#191970] font-body text-[#F5F5F5]">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- App Bar -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center">
+</div>
+<h1 class="text-[#F5F5F5] text-xl font-display font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Settings</h1>
+<div class="flex size-12 shrink-0 items-center"></div>
+</div>
+<div class="p-4 flex flex-col gap-8">
+<!-- Profile Strength Indicator -->
+<div class="flex flex-col gap-3 p-4 bg-white/5 rounded-xl">
+<div class="flex gap-6 justify-between">
+<p class="text-[#F5F5F5] text-base font-medium leading-normal font-body">Profile Strength</p>
+<p class="text-[#F5F5F5] text-sm font-normal leading-normal font-body">75%</p>
+</div>
+<div class="rounded-full bg-white/10 h-2.5">
+<div class="h-full rounded-full bg-primary" style="width: 75%;"></div>
+</div>
+</div>
+<!-- Menu Items -->
+<div class="flex flex-col bg-white/5 rounded-xl">
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-white/10">
+<div class="flex items-center gap-4">
+<div class="text-[#F5F5F5] flex items-center justify-center shrink-0 size-11">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-[#F5F5F5] text-base font-normal leading-normal flex-1 truncate font-body">Profile</p>
+</div>
+<div class="shrink-0">
+<div class="text-[#F5F5F5] flex size-11 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-white/10">
+<div class="flex items-center gap-4">
+<div class="text-[#F5F5F5] flex items-center justify-center shrink-0 size-11">
+<span class="material-symbols-outlined">security</span>
+</div>
+<p class="text-[#F5F5F5] text-base font-normal leading-normal flex-1 truncate font-body">Security</p>
+</div>
+<div class="shrink-0">
+<div class="text-[#F5F5F5] flex size-11 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-[#F5F5F5] flex items-center justify-center shrink-0 size-11">
+<span class="material-symbols-outlined">info</span>
+</div>
+<p class="text-[#F5F5F5] text-base font-normal leading-normal flex-1 truncate font-body">About Us</p>
+</div>
+<div class="shrink-0">
+<div class="text-[#F5F5F5] flex size-11 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Accessibility Section -->
+<div class="flex flex-col bg-white/5 rounded-xl">
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-[#F5F5F5] flex items-center justify-center shrink-0 size-11">
+<span class="material-symbols-outlined">accessibility_new</span>
+</div>
+<p class="text-[#F5F5F5] text-base font-normal leading-normal flex-1 truncate font-body">Reduce Motion</p>
+</div>
+<div class="shrink-0">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Logout -->
+<div class="flex flex-col bg-white/5 rounded-xl">
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-[#F5F5F5] flex items-center justify-center shrink-0 size-11">
+<span class="material-symbols-outlined">logout</span>
+</div>
+<p class="text-[#F5F5F5] text-base font-normal leading-normal flex-1 truncate font-body">Logout</p>
+</div>
+<div class="shrink-0">
+<div class="text-[#F5F5F5] flex size-11 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

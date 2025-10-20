@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MoneyMate App Lock</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#42a5e4", "background-light": "#f6f7f8", "background-dark": "#111b21"}, fontFamily: {display: "Be Vietnam Pro", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+<style>
+        body {
+            background: linear-gradient(to bottom, #483D8B, #191970);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body">
+<div class="relative flex h-screen w-full flex-col items-center justify-between p-8 text-white">
+<div class="flex flex-col items-center gap-4">
+<div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-white">
+                    account_balance_wallet
+                </span>
+</div>
+<p class="font-display text-lg font-bold text-gray-200">MoneyMate</p>
+</div>
+<div class="flex flex-col items-center gap-8 w-full">
+<h2 class="text-gray-200 tracking-light text-xl font-display font-medium leading-tight text-center">Enter your PIN</h2>
+<div class="flex justify-center px-4 py-3">
+<fieldset class="relative flex gap-4">
+<div class="h-4 w-4 rounded-full border border-gray-400 bg-transparent"></div>
+<div class="h-4 w-4 rounded-full border border-gray-400 bg-transparent"></div>
+<div class="h-4 w-4 rounded-full border border-gray-400 bg-transparent"></div>
+<div class="h-4 w-4 rounded-full border border-gray-400 bg-transparent"></div>
+</fieldset>
+</div>
+<div class="grid grid-cols-3 gap-8 w-full max-w-xs">
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">1</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">2</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">3</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">4</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">5</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">6</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">7</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">8</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">9</button>
+<div class="w-20 h-20"></div>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-3xl font-display font-bold text-gray-200 active:bg-white/20">0</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-transparent text-gray-200 active:bg-white/10">
+<span class="material-symbols-outlined text-4xl">backspace</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center gap-4">
+<button class="flex items-center justify-center h-16 w-16 rounded-full bg-white/20">
+<span class="material-symbols-outlined text-4xl text-white">fingerprint</span>
+</button>
+<a class="font-body text-sm text-gray-300 hover:text-white" href="#">Forgot PIN?</a>
+</div>
+</div>
+</body></html>

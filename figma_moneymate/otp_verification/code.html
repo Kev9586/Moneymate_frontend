@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OTP Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700&amp;family=Be+Vietnam+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#42a5e4", "primary-disabled": "#00BCD480", "background-light": "#f6f7f8", "background-dark": "#111b21", "dark-slate-blue": "#483D8B", "midnight-blue": "#191970"}, fontFamily: {display: "Be Vietnam Pro", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, boxShadow: {glow: "0 0 15px 2px rgba(0, 188, 212, 0.7)"}}}};</script>
+<style>
+    body {
+      background-image: linear-gradient(to bottom, #483D8B, #191970);
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    .otp-input:focus {
+      border-color: #00BCD4;
+      box-shadow: 0 0 15px 2px rgba(0, 188, 212, 0.7);
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body bg-background-dark text-white">
+<div class="relative flex flex-col min-h-screen w-full">
+<!-- Top App Bar -->
+<header class="flex items-center p-4">
+<button class="flex items-center justify-center h-12 w-12 rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-white" style="font-size: 24px;">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold font-display flex-1 text-center pr-12">OTP Verification</h1>
+</header>
+<main class="flex flex-col items-center justify-center flex-grow px-4 pb-8">
+<!-- Primary Text -->
+<h2 class="font-display text-[32px] font-bold tracking-tight text-center mt-6">Enter the 6-digit code</h2>
+<p class="text-base text-white/80 mt-2 text-center">Sent to j***n@example.com</p>
+<!-- OTP Input Fields -->
+<div class="flex justify-center mt-12 mb-8">
+<fieldset class="flex gap-3 sm:gap-4">
+<input class="otp-input flex h-16 w-14 text-center text-2xl font-medium bg-white/5 border border-white/20 rounded-xl focus:outline-none transition-all duration-300 ease-in-out" maxlength="1" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength); if(this.value.length === 1 &amp;&amp; this.nextElementSibling) { this.nextElementSibling.focus(); }" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '' &amp;&amp; this.previousElementSibling) { this.previousElementSibling.focus(); }" type="number"/>
+<input class="otp-input flex h-16 w-14 text-center text-2xl font-medium bg-white/5 border border-white/20 rounded-xl focus:outline-none transition-all duration-300 ease-in-out" maxlength="1" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength); if(this.value.length === 1 &amp;&amp; this.nextElementSibling) { this.nextElementSibling.focus(); }" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '' &amp;&amp; this.previousElementSibling) { this.previousElementSibling.focus(); }" type="number"/>
+<input class="otp-input flex h-16 w-14 text-center text-2xl font-medium bg-white/5 border border-white/20 rounded-xl focus:outline-none transition-all duration-300 ease-in-out" maxlength="1" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength); if(this.value.length === 1 &amp;&amp; this.nextElementSibling) { this.nextElementSibling.focus(); }" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '' &amp;&amp; this.previousElementSibling) { this.previousElementSibling.focus(); }" type="number"/>
+<input class="otp-input flex h-16 w-14 text-center text-2xl font-medium bg-white/5 border border-white/20 rounded-xl focus:outline-none transition-all duration-300 ease-in-out" maxlength="1" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength); if(this.value.length === 1 &amp;&amp; this.nextElementSibling) { this.nextElementSibling.focus(); }" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '' &amp;&amp; this.previousElementSibling) { this.previousElementSibling.focus(); }" type="number"/>
+<input class="otp-input flex h-16 w-14 text-center text-2xl font-medium bg-white/5 border border-white/20 rounded-xl focus:outline-none transition-all duration-300 ease-in-out" maxlength="1" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength); if(this.value.length === 1 &amp;&amp; this.nextElementSibling) { this.nextElementSibling.focus(); }" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '' &amp;&amp; this.previousElementSibling) { this.previousElementSibling.focus(); }" type="number"/>
+<input class="otp-input flex h-16 w-14 text-center text-2xl font-medium bg-white/5 border border-white/20 rounded-xl focus:outline-none transition-all duration-300 ease-in-out" maxlength="1" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength); if(this.value.length === 1 &amp;&amp; this.nextElementSibling) { this.nextElementSibling.focus(); }" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '' &amp;&amp; this.previousElementSibling) { this.previousElementSibling.focus(); }" type="number"/>
+</fieldset>
+</div>
+<!-- Timer & Resend Code -->
+<div class="flex items-center justify-center space-x-2 text-base text-white/80">
+<p>Resend in 00:59</p>
+<span>|</span>
+<button class="font-medium text-primary-disabled" disabled="">Resend Code</button>
+</div>
+<!-- Placeholder for error message -->
+<!-- <div class="flex items-center gap-2 mt-4 text-red-400">
+        <span class="material-symbols-outlined text-lg">error_outline</span>
+        <p class="text-sm">Incorrect OTP. Please try again.</p>
+      </div> -->
+<div class="flex-grow"></div>
+<!-- Verify Button -->
+<div class="w-full px-4 pb-4">
+<button class="w-full h-14 bg-primary-disabled text-white font-bold font-display rounded-xl text-lg transition-colors" disabled="">
+          Verify
+        </button>
+</div>
+</main>
+</div>
+</body></html>

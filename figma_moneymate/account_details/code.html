@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Details - MoneyMate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#42a5e4", "background-light": "#f6f7f8", "background-dark": "#111b21", "dark-slate-blue": "#483D8B", "midnight-blue": "#191970", "vibrant-mint-green": "#3EB489", "light-gray": "#D3D3D3"}, fontFamily: {display: "Be Vietnam Pro", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body>
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-gradient-to-b from-dark-slate-blue to-midnight-blue dark group/design-root overflow-x-hidden font-body" style='font-family: "Inter", "Noto Sans", sans-serif;'>
+<header class="flex items-center bg-transparent p-4 pb-2 justify-between sticky top-0 z-10 backdrop-blur-sm">
+<button aria-label="Back" class="text-white flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
+</button>
+<h1 class="text-white text-lg font-display font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Account Details</h1>
+<div class="w-12"></div>
+</header>
+<main class="flex-1 px-4 py-4">
+<div class="flex flex-col gap-8">
+<div class="p-4 @container">
+<div class="flex flex-col items-start justify-start rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white/5 backdrop-blur-lg">
+<div class="flex w-full items-center justify-start gap-4 p-4">
+<img alt="Chase Bank logo" class="h-10 w-10 object-contain" data-alt="Chase Bank logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxsDBtYxR-R7pc7NV3P_B6AObQiToEa96F5joPY6WC0H3xuMAwVVifgJNL_BAXeRZI7Xu9MNbGvSLSfdX7lH_VJOSS615CdAVZaQMZGqxfeWAGcpgabwNUrroQgzgAx324wkT8J5nggboFfN0IgVu7ng6cXL56JNXk8OG-oA2mUha59X4A7XS7CoXfUZAzGcp8f7diaan1IrjA7dxWEa_5Es8F2DGcBvnbUNo5CpZf6l1Y1slpXwfMgiSTa7-4Jkukv8Vm9wkiLRw"/>
+<div class="flex flex-col">
+<p class="text-white text-lg font-display font-bold leading-tight tracking-[-0.015em]">Chase Bank</p>
+<p class="text-light-gray text-base font-normal leading-normal">**** **** **** 1234</p>
+</div>
+</div>
+<div class="flex w-full flex-col items-start justify-center gap-1 px-4 pb-4">
+<p class="text-light-gray text-base font-normal leading-normal">Current Balance</p>
+<p class="text-white text-4xl font-display font-extrabold leading-tight tracking-[-0.015em]">$1,234.56</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-white text-lg font-display font-bold px-4">Recent Transactions</p>
+<div class="flex items-center gap-4 bg-transparent px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-lg bg-white/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">coffee</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-base font-medium leading-normal line-clamp-1">Starbucks</p>
+<p class="text-light-gray text-sm font-normal leading-normal line-clamp-2">Oct 26</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-white text-base font-medium leading-normal">-$12.99</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-transparent px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-lg bg-white/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">business_center</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-base font-medium leading-normal line-clamp-1">Salary Deposit</p>
+<p class="text-light-gray text-sm font-normal leading-normal line-clamp-2">Oct 25</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-vibrant-mint-green text-base font-medium leading-normal">+$2,500.00</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-transparent px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-lg bg-white/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">shopping_cart</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-base font-medium leading-normal line-clamp-1">Amazon</p>
+<p class="text-light-gray text-sm font-normal leading-normal line-clamp-2">Oct 24</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-white text-base font-medium leading-normal">-$78.45</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-transparent px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-lg bg-white/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">grocery</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-base font-medium leading-normal line-clamp-1">Whole Foods</p>
+<p class="text-light-gray text-sm font-normal leading-normal line-clamp-2">Oct 23</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-white text-base font-medium leading-normal">-$124.32</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-transparent px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-lg bg-white/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">receipt_long</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-base font-medium leading-normal line-clamp-1">Tax Refund</p>
+<p class="text-light-gray text-sm font-normal leading-normal line-clamp-2">Oct 22</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-vibrant-mint-green text-base font-medium leading-normal">+$850.00</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="p-4 mt-auto">
+<button class="w-full h-12 flex items-center justify-center bg-vibrant-mint-green text-midnight-blue rounded-lg font-display font-bold text-base">
+        See All
+      </button>
+</footer>
+</div>
+</body></html>

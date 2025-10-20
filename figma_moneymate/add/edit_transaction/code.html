@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Transaction</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#42a5e4", "background-light": "#f6f7f8", "background-dark": "#111b21", "slate-blue": "#483D8B", "off-white": "#F5F5F5"}, fontFamily: {display: "Be Vietnam Pro", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-slate-blue to-background-dark font-body">
+<div class="relative flex h-auto min-h-screen w-full flex-col text-off-white dark group/design-root overflow-x-hidden">
+<div class="flex items-center p-4 pb-2 justify-between">
+<button class="flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-off-white">arrow_back</span>
+</button>
+<h2 class="text-off-white text-lg font-bold font-display leading-tight tracking-[-0.015em] flex-1 text-center">Add Transaction</h2>
+<div class="size-12"></div>
+</div>
+<h1 class="text-off-white tracking-light text-[48px] font-bold leading-tight px-4 text-center pb-3 pt-6 font-display">$0.00</h1>
+<div class="flex px-4 py-3">
+<div class="flex h-12 flex-1 items-center justify-center rounded-lg bg-slate-blue/50 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-primary has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-background-dark text-off-white text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Credit</span>
+<input class="invisible w-0" name="transaction-type" type="radio" value="Credit"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-primary has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-background-dark text-off-white text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Debit</span>
+<input checked="" class="invisible w-0" name="transaction-type" type="radio" value="Debit"/>
+</label>
+</div>
+</div>
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-off-white text-base font-medium leading-normal pb-2 font-display">Note or Description</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-off-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-slate-blue/50 h-14 placeholder:text-off-white/60 p-4 text-base font-normal leading-normal font-body" placeholder="e.g., Coffee with Sarah" value=""/>
+</label>
+</div>
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-off-white text-base font-medium leading-normal pb-2 font-display">Date</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-off-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-slate-blue/50 h-14 placeholder:text-off-white/60 p-4 pr-2 text-base font-normal leading-normal font-body" value="October 26, 2023"/>
+<div class="text-off-white flex border-none bg-slate-blue/50 items-center justify-center pr-4 rounded-r-lg">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+</div>
+</label>
+</div>
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-off-white text-base font-medium leading-normal pb-2 font-display">Account</p>
+<div class="relative w-full">
+<select class="form-select appearance-none w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-off-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-slate-blue/50 h-14 p-4 text-base font-normal leading-normal font-body">
+<option>Chase Checking</option>
+<option>Amex Gold</option>
+<option>Savings Account</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-off-white">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+</div>
+</label>
+</div>
+<div class="mt-auto px-4 py-6">
+<button class="w-full h-14 bg-primary text-background-dark font-bold font-display rounded-xl text-lg flex items-center justify-center hover:bg-primary/90 transition-colors">
+                Save Transaction
+            </button>
+</div>
+</div>
+</body></html>
