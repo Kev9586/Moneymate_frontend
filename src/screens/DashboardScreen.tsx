@@ -4,6 +4,12 @@ import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthStore } from '../store/useAuthStore';
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
+import ScreenWrapper from '../components/ScreenWrapper';
 
 export default function DashboardScreen() {
   const navigation = useNavigation();
@@ -16,12 +22,14 @@ export default function DashboardScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Dashboard</Text>
-      <Button mode="contained" onPress={handleLogout} style={styles.button}>
-        Logout
-      </Button>
-    </View>
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <Text style={styles.title}>Dashboard</Text>
+        <Button mode="contained" onPress={handleLogout} style={styles.button}>
+          Logout
+        </Button>
+      </View>
+    </ScreenWrapper>
   );
 }
 
@@ -30,16 +38,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#FFFFFF',
   },
   title: {
-    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: responsiveHeight(3),
     color: '#2C7BE5',
   },
   button: {
-    marginTop: 16,
+    marginTop: responsiveHeight(2),
   },
 });

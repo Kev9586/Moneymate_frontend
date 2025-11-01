@@ -4,8 +4,18 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@env": ["./node_modules/react-native-dotenv/index.d.ts"],
-      "@/*": ["./*"]
+      "@env": [
+        "./node_modules/react-native-dotenv/index.d.ts"
+      ],
+      "@/*": [
+        "./*"
+      ]
     }
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "declarations.d.ts",
+    "nativewind-env.d.ts"
+  ]
 }

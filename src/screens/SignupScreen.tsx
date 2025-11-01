@@ -3,33 +3,41 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Dimensions,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MotiView } from 'moti';
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-
+import { AxiosError } from 'axios';
 import apiClient from '../api/apiClient';
+import ScreenWrapper from '../components/ScreenWrapper';
 
-const { height } = Dimensions.get('window');
-const isSmallScreen = height < 700;
+type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  Dashboard: undefined;
+  OtpVerify: { email: string };
+};
+
+type SignupScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Signup'>;
+
+interface SignupFormData {
+  username: string;
+  email: string;
+  phone_number: string;
+  password: string;
+  confirm_password: string;
+}
 
 export default function SignupScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<SignupScreenNavigationProp>();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,7 +58,7 @@ export default function SignupScreen() {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm({
+  } = useForm<SignupFormData>({
     defaultValues: {
       username: '',
       email: '',
@@ -62,14 +70,14 @@ export default function SignupScreen() {
 
   const password = watch('password');
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: SignupFormData) => {
     setLoading(true);
     try {
       await apiClient.post('/auth/signup', data);
       showSnackbar('Please verify your OTP.', 'green');
       navigation.navigate('OtpVerify', { email: data.email });
-    } catch (error) {
-      if (error.response?.status === 409) {
+    } catch (error: unknown) {
+      if ((error as AxiosError).response?.status === 409) {
         showSnackbar('Account already exists.', 'red');
       } else {
         showSnackbar('An unexpected error occurred.', 'red');
@@ -79,232 +87,357 @@ export default function SignupScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gradient-to-b from-purple-800 to-indigo-900">
-      <LinearGradient colors={['#4c1d95', '#1e3a8a']} className="flex-1">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          className="flex-1"
-        >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ScrollView
-              contentContainerStyle={{
-                flexGrow: 1,
-                justifyContent: 'center',
-                paddingHorizontal: responsiveWidth(5),
-                paddingVertical: isSmallScreen ? responsiveHeight(2) : responsiveHeight(5),
-              }}
-            >
-              <MotiView
-                from={{ opacity: 0, translateY: -20 }}
-                animate={{ opacity: 1, translateY: 0 }}
-                transition={{ type: 'timing', duration: 500 }}
-                className="items-center mb-6"
-              >
-                <Text
-                  style={{ fontSize: responsiveFontSize(4) }}
-                  className="font-display text-white tracking-light font-bold text-center"
-                >
-                  Create Account
-                </Text>
-              </MotiView>
-
-              <View className="gap-y-4">
-                <Controller
-                  control={control}
-                  name="username"
-                  rules={{
-                    required: 'Username is required.',
-                    minLength: { value: 3, message: 'Username must be at least 3 characters.' },
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <View className="flex-row items-center gap-x-2 bg-white/15 rounded-xl px-4 py-1 shadow-md shadow-black/30">
-                      <MaterialCommunityIcons name="account" size={responsiveFontSize(3)} color="rgba(255,255,255,0.7)" />
-                      <TextInput
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="Username"
-                        error={!!errors.username}
-                        className="flex-1 bg-transparent h-12 text-white"
-                        textColor="white"
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        underlineColor="transparent"
-                        activeUnderlineColor="transparent"
-                      />
-                    </View>
-                  )}
-                />
-                {errors.username && <Text className="text-red-400 mt-1 ml-2">{errors.username.message}</Text>}
-
-                <Controller
-                  control={control}
-                  name="email"
-                  rules={{
-                    required: 'Email is required.',
-                    pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email address.' },
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <View className="flex-row items-center gap-x-2 bg-white/15 rounded-xl px-4 py-1 shadow-md shadow-black/30">
-                      <MaterialCommunityIcons name="email" size={responsiveFontSize(3)} color="rgba(255,255,255,0.7)" />
-                      <TextInput
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="Email ID"
-                        error={!!errors.email}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        className="flex-1 bg-transparent h-12 text-white"
-                        textColor="white"
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        underlineColor="transparent"
-                        activeUnderlineColor="transparent"
-                      />
-                    </View>
-                  )}
-                />
-                {errors.email && <Text className="text-red-400 mt-1 ml-2">{errors.email.message}</Text>}
-
-                <Controller
-                  control={control}
-                  name="phone_number"
-                  rules={{
-                    required: 'Phone number is required.',
-                    pattern: { value: /^[0-9]{10,15}$/, message: 'Invalid phone number.' },
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <View className="flex-row items-center gap-x-2 bg-white/15 rounded-xl px-4 py-1 shadow-md shadow-black/30">
-                      <MaterialCommunityIcons name="phone" size={responsiveFontSize(3)} color="rgba(255,255,255,0.7)" />
-                      <TextInput
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="Phone Number"
-                        error={!!errors.phone_number}
-                        keyboardType="phone-pad"
-                        className="flex-1 bg-transparent h-12 text-white"
-                        textColor="white"
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        underlineColor="transparent"
-                        activeUnderlineColor="transparent"
-                      />
-                    </View>
-                  )}
-                />
-                {errors.phone_number && <Text className="text-red-400 mt-1 ml-2">{errors.phone_number.message}</Text>}
-
-                <Controller
-                  control={control}
-                  name="password"
-                  rules={{
-                    required: 'Password is required.',
-                    minLength: { value: 8, message: 'Password must be at least 8 characters.' },
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <View className="flex-row items-center gap-x-2 bg-white/15 rounded-xl px-4 py-1 shadow-md shadow-black/30">
-                      <MaterialCommunityIcons name="lock" size={responsiveFontSize(3)} color="rgba(255,255,255,0.7)" />
-                      <TextInput
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="Password"
-                        error={!!errors.password}
-                        secureTextEntry={!showPassword}
-                        className="flex-1 bg-transparent h-12 text-white"
-                        textColor="white"
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        underlineColor="transparent"
-                        activeUnderlineColor="transparent"
-                      />
-                      <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                        <MaterialCommunityIcons
-                          name={showPassword ? 'eye-off' : 'eye'}
-                          size={responsiveFontSize(3)}
-                          color="rgba(255,255,255,0.7)"
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                />
-                {errors.password && <Text className="text-red-400 mt-1 ml-2">{errors.password.message}</Text>}
-
-                <Controller
-                  control={control}
-                  name="confirm_password"
-                  rules={{
-                    required: 'Please confirm your password.',
-                    validate: (value) => value === password || 'Passwords do not match.',
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <View className="flex-row items-center gap-x-2 bg-white/15 rounded-xl px-4 py-1 shadow-md shadow-black/30">
-                      <MaterialCommunityIcons name="lock-check" size={responsiveFontSize(3)} color="rgba(255,255,255,0.7)" />
-                      <TextInput
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="Confirm Password"
-                        error={!!errors.confirm_password}
-                        secureTextEntry={!showConfirmPassword}
-                        className="flex-1 bg-transparent h-12 text-white"
-                        textColor="white"
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        underlineColor="transparent"
-                        activeUnderlineColor="transparent"
-                      />
-                      <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                        <MaterialCommunityIcons
-                          name={showConfirmPassword ? 'eye-off' : 'eye'}
-                          size={responsiveFontSize(3)}
-                          color="rgba(255,255,255,0.7)"
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                />
-                {errors.confirm_password && (
-                  <Text className="text-red-400 mt-1 ml-2">{errors.confirm_password.message}</Text>
-                )}
-              </View>
-
-              <MotiView
-                from={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: 'timing', duration: 500, delay: 100 }}
-              >
-                <Button
-                  mode="contained"
-                  onPress={handleSubmit(onSubmit)}
-                  disabled={loading}
-                  loading={loading}
-                  className="bg-blue-600 rounded-2xl py-2 mt-8 shadow-md"
-                  labelStyle={{
-                    fontSize: responsiveFontSize(2.2),
-                    color: 'white',
-                    fontWeight: '600',
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </MotiView>
-
-              <View className="flex-row justify-center mt-6">
-                <Text className="text-gray-300 text-base">Already have an account? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                  <Text className="font-bold text-white text-base">Sign In</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+    <ScreenWrapper
+      snackbar={
         <Snackbar
           visible={snackbarVisible}
           onDismiss={onDismissSnackBar}
           duration={3000}
-          style={{ backgroundColor: snackbarColor === 'green' ? '#4CAF50' : '#F44336' }}
+          style={{
+            backgroundColor: snackbarColor === 'green' ? '#4CAF50' : '#F44336',
+          }}
         >
           {snackbarMessage}
         </Snackbar>
-      </LinearGradient>
-    </SafeAreaView>
+      }
+    >
+      <MotiView
+        from={{ opacity: 0, translateY: -20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 500 }}
+        style={{ marginBottom: responsiveHeight(3), alignItems: 'center' }}
+      >
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontWeight: 'bold',
+            fontSize: responsiveFontSize(3),
+            textAlign: 'center',
+          }}
+        >
+          Create Account
+        </Text>
+      </MotiView>
+
+      <View style={{ marginBottom: responsiveHeight(2) }}>
+        {/* Username */}
+        <Controller
+          control={control}
+          name="username"
+          rules={{
+            required: 'Username is required.',
+            minLength: { value: 3, message: 'At least 3 characters.' },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                paddingHorizontal: responsiveWidth(4),
+                paddingVertical: responsiveHeight(1),
+                borderRadius: responsiveWidth(3),
+                marginTop: responsiveHeight(1),
+              }}
+            >
+              <MaterialCommunityIcons
+                name="account"
+                size={responsiveFontSize(3)}
+                color="rgba(255,255,255,0.8)"
+              />
+              <TextInput
+                placeholder="Username"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.username}
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  height: responsiveHeight(6),
+                  fontSize: responsiveFontSize(1.8),
+                }}
+                underlineColor="transparent"
+                activeUnderlineColor="transparent"
+              />
+            </View>
+          )}
+        />
+        {errors.username && (
+          <Text style={{ color: '#F87171', marginLeft: responsiveWidth(2) }}>
+            {errors.username.message}
+          </Text>
+        )}
+
+        {/* Email */}
+        <Controller
+          control={control}
+          name="email"
+          rules={{
+            required: 'Email is required.',
+            pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email.' },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                paddingHorizontal: responsiveWidth(4),
+                paddingVertical: responsiveHeight(1),
+                borderRadius: responsiveWidth(3),
+                marginTop: responsiveHeight(2),
+              }}
+            >
+              <MaterialCommunityIcons
+                name="email"
+                size={responsiveFontSize(3)}
+                color="rgba(255,255,255,0.8)"
+              />
+              <TextInput
+                placeholder="Email ID"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.email}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  height: responsiveHeight(6),
+                  fontSize: responsiveFontSize(1.8),
+                }}
+                underlineColor="transparent"
+                activeUnderlineColor="transparent"
+              />
+            </View>
+          )}
+        />
+        {errors.email && (
+          <Text style={{ color: '#F87171', marginLeft: responsiveWidth(2) }}>
+            {errors.email.message}
+          </Text>
+        )}
+
+        {/* Phone */}
+        <Controller
+          control={control}
+          name="phone_number"
+          rules={{
+            required: 'Phone number is required.',
+            pattern: { value: /^[0-9]{10,15}$/, message: 'Invalid number.' },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                paddingHorizontal: responsiveWidth(4),
+                paddingVertical: responsiveHeight(1),
+                borderRadius: responsiveWidth(3),
+                marginTop: responsiveHeight(2),
+              }}
+            >
+              <MaterialCommunityIcons
+                name="phone"
+                size={responsiveFontSize(3)}
+                color="rgba(255,255,255,0.8)"
+              />
+              <TextInput
+                placeholder="Phone Number"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.phone_number}
+                keyboardType="phone-pad"
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  height: responsiveHeight(6),
+                  fontSize: responsiveFontSize(1.8),
+                }}
+                underlineColor="transparent"
+                activeUnderlineColor="transparent"
+              />
+            </View>
+          )}
+        />
+        {errors.phone_number && (
+          <Text style={{ color: '#F87171', marginLeft: responsiveWidth(2) }}>
+            {errors.phone_number.message}
+          </Text>
+        )}
+
+        {/* Password */}
+        <Controller
+          control={control}
+          name="password"
+          rules={{
+            required: 'Password is required.',
+            minLength: { value: 8, message: 'At least 8 characters.' },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                paddingHorizontal: responsiveWidth(4),
+                paddingVertical: responsiveHeight(1),
+                borderRadius: responsiveWidth(3),
+                marginTop: responsiveHeight(2),
+              }}
+            >
+              <MaterialCommunityIcons
+                name="lock"
+                size={responsiveFontSize(3)}
+                color="rgba(255,255,255,0.8)"
+              />
+              <TextInput
+                placeholder="Password"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                secureTextEntry={!showPassword}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.password}
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  height: responsiveHeight(6),
+                  fontSize: responsiveFontSize(1.8),
+                }}
+                underlineColor="transparent"
+                activeUnderlineColor="transparent"
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <MaterialCommunityIcons
+                  name={showPassword ? 'eye-off' : 'eye'}
+                  size={responsiveFontSize(3)}
+                  color="rgba(255,255,255,0.7)"
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+        {errors.password && (
+          <Text style={{ color: '#F87171', marginLeft: responsiveWidth(2) }}>
+            {errors.password.message}
+          </Text>
+        )}
+
+        {/* Confirm Password */}
+        <Controller
+          control={control}
+          name="confirm_password"
+          rules={{
+            required: 'Confirm your password.',
+            validate: (value) => value === password || 'Passwords do not match.',
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                paddingHorizontal: responsiveWidth(4),
+                paddingVertical: responsiveHeight(1),
+                borderRadius: responsiveWidth(3),
+                marginTop: responsiveHeight(2),
+              }}
+            >
+              <MaterialCommunityIcons
+                name="lock-check"
+                size={responsiveFontSize(3)}
+                color="rgba(255,255,255,0.8)"
+              />
+              <TextInput
+                placeholder="Confirm Password"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                secureTextEntry={!showConfirmPassword}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.confirm_password}
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  height: responsiveHeight(6),
+                  fontSize: responsiveFontSize(1.8),
+                }}
+                underlineColor="transparent"
+                activeUnderlineColor="transparent"
+              />
+              <TouchableOpacity
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                <MaterialCommunityIcons
+                  name={showConfirmPassword ? 'eye-off' : 'eye'}
+                  size={responsiveFontSize(3)}
+                  color="rgba(255,255,255,0.7)"
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+        {errors.confirm_password && (
+          <Text style={{ color: '#F87171', marginLeft: responsiveWidth(2) }}>
+            {errors.confirm_password.message}
+          </Text>
+        )}
+      </View>
+
+      {/* Submit Button */}
+      <MotiView
+        from={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: 'timing', duration: 500 }}
+        style={{ marginTop: responsiveHeight(3) }}
+      >
+        <Button
+          mode="contained"
+          onPress={handleSubmit(onSubmit)}
+          disabled={loading}
+          loading={loading}
+          style={{
+            borderRadius: responsiveWidth(5),
+            paddingVertical: responsiveHeight(1.5),
+            backgroundColor: '#2563EB',
+          }}
+          labelStyle={{
+            color: 'white',
+            fontWeight: '600',
+            fontSize: responsiveFontSize(2),
+          }}
+        >
+          Sign Up
+        </Button>
+      </MotiView>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: responsiveHeight(3),
+        }}
+      >
+        <Text style={{ color: 'rgba(255,255,255,0.7)' }}>
+          Already have an account?{' '}
+        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={{ fontWeight: 'bold', color: '#FFFFFF' }}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
+    </ScreenWrapper>
   );
 }

@@ -1,5 +1,1 @@
-
-
-declare module '@env' {
-  export const API_URL: string;
-}
+/// <reference types="nativewind/types" />

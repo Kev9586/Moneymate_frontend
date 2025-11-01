@@ -17,7 +17,7 @@ function AuthStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="VerifyOtp" component={OtpVerifyScreen} />
+      <Stack.Screen name="OtpVerify" component={OtpVerifyScreen} />
     </Stack.Navigator>
   );
 }
